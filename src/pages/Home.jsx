@@ -14,6 +14,7 @@ export default function Home() {
     <>
       <h1>danum-frontend12120</h1>
       <p>Backend Data : {hello}</p>
+      <p>test</p>
     </>
   );
 }
