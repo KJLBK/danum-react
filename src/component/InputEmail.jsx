@@ -30,7 +30,7 @@ const StyledInput = styled.input`
 export default function InputEmail() {
     return (
         <>
-            <label for="inputemail">이메일</label><br/>
+            <label>이메일</label><br/>
             <StyledInput type='email' placeholder="example@mail.com"/>
         </>
     );

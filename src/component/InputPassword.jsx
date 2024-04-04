@@ -30,7 +30,7 @@ const StyledInput = styled.input`
 export default function InputPassword() {
     return (
         <>
-            <label for="inputpassword">비밀번호</label><br/>
+            <label>비밀번호</label><br/>
             <StyledInput type='password' placeholder="비밀번호"/>
         </>
     );
