@@ -8,7 +8,7 @@ const StyledInput = styled.input`
     justify-content: center;
     align-items: center;
     font-size: 15px;
-    background-image: linear-gradient(#000000, #000000), linear-gradient(#bfbfbf, #bfbfbf);
+    background-image: linear-gradient(#5271ff, #5271ff), linear-gradient(#bfbfbf, #bfbfbf);
     border: 0 none;
     border-radius: 0;
     box-shadow: none;
