@@ -1,10 +1,9 @@
 import styled from "styled-components";
 
-const StyledInput = styled.input`
-    display: flex;
+const StyledInputPass = styled.input`
+    position: relative;
     width: 320px;
     height: 25px;
-    padding: 7px 0px 7px 0px;
     justify-content: center;
     align-items: center;
     font-size: 15px;
@@ -19,6 +18,8 @@ const StyledInput = styled.input`
     background-size: 0 2px, 100% 1px;
     transition: background 0s ease-out 0s;
     min-height: 35px;
+    margin-left: 40px;
+    margin-bottom: 20px;
 
     &:focus {
         background-size: 100% 2px, 100% 1px;
@@ -30,8 +31,7 @@ const StyledInput = styled.input`
 export default function InputPassword() {
     return (
         <>
-            <label>비밀번호</label><br/>
-            <StyledInput type='password' placeholder="비밀번호"/>
+            <StyledInputPass type='password' placeholder="비밀번호"/>
         </>
     );
 }

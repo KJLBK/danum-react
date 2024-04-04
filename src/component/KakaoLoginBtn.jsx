@@ -16,7 +16,7 @@ const KakaoIcon = () => (
 const StyledButton = styled.button`
     width: 320px;
     height: 45px;
-    padding: 10px 25px;
+    margin-left: 40px;
     border: 2px solid #FEE500;
     border-radius: 8px;
     font-weight: 500;

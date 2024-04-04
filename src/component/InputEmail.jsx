@@ -1,10 +1,9 @@
 import styled from "styled-components";
 
-const StyledInput = styled.input`
-    display: flex;
+const StyledInputEmail = styled.input`
     width: 320px;
     height: 25px;
-    padding: 7px 0px 7px 0px;
+    position: relative;
     justify-content: center;
     align-items: center;
     font-size: 15px;
@@ -19,6 +18,8 @@ const StyledInput = styled.input`
     background-size: 0 2px, 100% 1px;
     transition: background 0s ease-out 0s;
     min-height: 35px;
+    margin-left: 40px;
+    margin-bottom: 20px;
 
     &:focus {
         background-size: 100% 2px, 100% 1px;
@@ -30,8 +31,7 @@ const StyledInput = styled.input`
 export default function InputEmail() {
     return (
         <>
-            <label>이메일</label><br/>
-            <StyledInput type='email' placeholder="example@mail.com"/>
+            <StyledInputEmail type='email' placeholder="example@mail.com"/>
         </>
     );
 }

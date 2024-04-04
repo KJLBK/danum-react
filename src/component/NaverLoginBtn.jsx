@@ -17,7 +17,9 @@ const NaverIcon = () => (
 const StyledButton = styled.button`
     width: 320px;
     height: 45px;
-    padding: 10px 25px;
+    margin-top: 15px;
+    margin-left: 40px;
+    margin-bottom: 20px;
     border: 2px solid #03C75A;
     border-radius: 8px;
     font-weight: 500;
