@@ -16,45 +16,31 @@ const NaverIcon = () => (
 
 const StyledButton = styled.button`
     width: 320px;
-    height: 55px;
+    height: 45px;
     padding: 10px 25px;
-    border: 2px solid #000;
+    border: 2px solid #03C75A;
     border-radius: 8px;
-    font-family: 'Lato', sans-serif;
     font-weight: 500;
     font-style: normal;
-    background: transparent;
+    font-size: 14px;
     cursor: pointer;
-    transition: all 0.3s ease;
     position: relative;
     display: flex;
     align-items: center;  /* 수직 가운데 정렬 */
     justify-content: center;  /* 수평 가운데 정렬 */
-    transition: all 0.3s ease;
-    overflow: hidden;
-
-    &:after {
-        position: absolute;
-        content: " ";
-        top: 0;
-        left: 0;
-        z-index: -1;
-        width: 100%;
-        height: 100%;
-        transition: all 0.3s ease;
-        -webkit-transform: scale(.1);
-        transform: scale(.1);
-        text-align: center;
-    }
+    background-color: #03C75A;
+    color: #fff;
 
     &:hover {
-        color: #fff;
-    }
-
-    &:hover:after {
-        background: #03C75A;
-        -webkit-transform: scale(1);
-        transform: scale(1);
+      box-shadow:
+        -3px -3px 10px 0px #fff9,
+        -2px -2px 2px 0px #fff9,
+        3px 3px 10px 0px #0002,
+        2px 2px 2px 0px #0001,
+        3px -3px 10px 0px #fff9,
+        2px -2px 2px 0px #fff9,
+        -3px 3px 10px 0px #0002,
+        -2px 2px 2px 0px #0001;
     }
 
     svg {
