@@ -2,6 +2,7 @@ import styled from "styled-components";
 import InputEmail from "../component/InputEmail";
 import InputPassword from "../component/InputPassword";
 import LoginBtn from "../component/LoginBtn";
+import { Link } from 'react-router-dom';
 
 const StlyedPage = styled.div`
   display: flex;
@@ -37,7 +38,7 @@ const StlyedHr = styled.hr`
   margin-left: 40px;
 `;
 
-const StlyedA = styled.a`
+const StlyedLink = styled(Link)`
   margin-left: 120px;
 `;
 
@@ -55,7 +56,7 @@ export default function LoginPage() {
           <StlyedHr/>
           <LoginBtn type="kakao">카카오로 시작하기</LoginBtn>
           <LoginBtn type="naver">네이버로 시작하기</LoginBtn>
-          <StlyedA href="#">계정 찾기 / 회원 가입</StlyedA>
+          <StlyedLink to="#">계정 찾기 / 회원 가입</StlyedLink>
         </StlyedDiv>
       </StlyedPage>
     </>
