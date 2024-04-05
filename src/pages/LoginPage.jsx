@@ -1,9 +1,7 @@
 import styled from "styled-components";
 import InputEmail from "../component/InputEmail";
 import InputPassword from "../component/InputPassword";
-import LoginButton from "../component/LoginButton";
-import KakaoLoginBtn from "../component/KakaoLoginBtn";
-import NaverLoginBtn from "../component/NaverLoginBtn";
+import LoginBtn from "../component/LoginBtn";
 
 const StlyedPage = styled.div`
   display: flex;
@@ -53,10 +51,10 @@ export default function LoginPage() {
           <InputEmail>이메일</InputEmail><br/>
           <StlyedLabel>비밀번호</StlyedLabel><br/>
           <InputPassword>비밀번호</InputPassword>
-          <LoginButton>로그인</LoginButton>
+          <LoginBtn>로그인</LoginBtn>
           <StlyedHr/>
-          <KakaoLoginBtn>카카오로 시작하기</KakaoLoginBtn>
-          <NaverLoginBtn>네이버로 시작하기</NaverLoginBtn>
+          <LoginBtn type="kakao">카카오로 시작하기</LoginBtn>
+          <LoginBtn type="naver">네이버로 시작하기</LoginBtn>
           <StlyedA href="#">계정 찾기 / 회원 가입</StlyedA>
         </StlyedDiv>
       </StlyedPage>

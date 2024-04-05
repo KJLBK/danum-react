@@ -17,19 +17,20 @@ const NaverIcon = () => (
 const StyledButton = styled.button`
     width: 320px;
     height: 45px;
-    margin-top: 15px;
-    margin-left: 40px;
-    margin-bottom: 20px;
-    border: 2px solid #03C75A;
+    cursor: pointer;
+    position: relative;
+    display: flex;
     border-radius: 8px;
     font-weight: 500;
     font-style: normal;
     font-size: 14px;
-    cursor: pointer;
-    position: relative;
-    display: flex;
     align-items: center;  /* 수직 가운데 정렬 */
     justify-content: center;  /* 수평 가운데 정렬 */
+    
+    margin-top: 15px;
+    margin-left: 40px;
+    margin-bottom: 20px;
+    border: 2px solid #03C75A;
     background-color: #03C75A;
     color: #fff;
 

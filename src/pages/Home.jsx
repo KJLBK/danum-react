@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useEffect } from 'react';
 import axios from 'axios';
+import LoginBtn from '../component/LoginBtn';
 
 export default function Home() {
   const [hello, setHello] = useState('');
