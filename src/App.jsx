@@ -1,15 +1,13 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { HashRouter, Route, Routes } from 'react-router-dom';
 import Home from './pages/Home';
-import LoginPage from './pages/LoginPage';
 
 function App() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="login" element={<LoginPage />} />
+        <Route exact path="/" Component={Home} />
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 
