@@ -61,7 +61,7 @@ jobs:
                   host: ${{ secrets.HOST }}
                   username: ${{ secrets.USER }}
                   script: |
-                      docker pull ${{ secrets.DOCKERHUB_USERNAME }}/my-nginx
-                      docker stop my-nginx || true
-                      docker rm my-nginx || true
-                      docker run -d --rm --name my-nginx -p 80:80 ${{ secrets.DOCKERHUB_USERNAME }}/my-nginx
+                      sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/my-nginx
+                      sudo docker stop my-nginx || true
+                      sudo docker rm my-nginx || true
+                      sudo docker run -d --rm --name my-nginx -p 80:80 ${{ secrets.DOCKERHUB_USERNAME }}/my-nginx
