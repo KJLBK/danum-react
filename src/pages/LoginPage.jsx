@@ -1,3 +1,4 @@
+
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import InputEmail from '../component/InputEmail.jsx'
@@ -11,6 +12,7 @@ const StlyedPage = styled.div`
 	height: 100vh;
 `
 
+
 const StlyedDiv = styled.div`
 	width: 400px;
 	height: 510px;
@@ -21,21 +23,27 @@ const StlyedDiv = styled.div`
 	box-shadow: 0px 0px 12px 5px rgba(0, 0, 0, 0.1);
 `
 
+
 const StlyedH2 = styled.h2`
 	padding-top: 30px;
 	padding-left: 40px;
+
 `
+
 
 const StlyedLabel = styled.label`
 	padding-top: 35px;
 	padding-left: 40px;
+
 `
+
 
 const StlyedHr = styled.hr`
 	margin-top: 15px;
 	margin-right: 40px;
 	margin-bottom: 15px;
 	margin-left: 40px;
+
 `
 
 const StlyedLink = styled(Link)`
