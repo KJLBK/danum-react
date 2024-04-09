@@ -17,6 +17,7 @@ module.exports = {
 		'no-multiple-empty-lines': 'error',
 		'no-console': ['warn', { allow: ['warn', 'error', 'info'] }],
 		'import/no-named-as-default': 'off',
+		'react/prop-types': 'off',
 		eqeqeq: 'error',
 		'no-unused-vars': 'warn',
 		'no-undef': 'warn',
@@ -26,4 +27,4 @@ module.exports = {
 			{ allowConstantExport: true },
 		],
 	},
-};
+}
