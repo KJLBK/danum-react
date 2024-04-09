@@ -1,16 +1,17 @@
-import styled from 'styled-components';
-import InputEmail from '../component/InputEmail.jsx';
-import InputPassword from '../component/InputPassword.jsx';
-import LoginButton from '../component/LoginButton.jsx';
-import KakaoLoginBtn from '../component/KakaoLoginBtn.jsx';
-import NaverLoginBtn from '../component/NaverLoginBtn.jsx';
+
+import { Link } from 'react-router-dom'
+import styled from 'styled-components'
+import InputEmail from '../component/InputEmail.jsx'
+import InputPassword from '../component/InputPassword.jsx'
+import LoginBtn from '../component/LoginBtn.jsx'
 
 const StlyedPage = styled.div`
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	height: 100vh;
-`;
+`
+
 
 const StlyedDiv = styled.div`
 	width: 400px;
@@ -20,28 +21,34 @@ const StlyedDiv = styled.div`
 	background: #fff;
 	mix-blend-mode: darken;
 	box-shadow: 0px 0px 12px 5px rgba(0, 0, 0, 0.1);
-`;
+`
+
 
 const StlyedH2 = styled.h2`
 	padding-top: 30px;
 	padding-left: 40px;
-`;
+
+`
+
 
 const StlyedLabel = styled.label`
 	padding-top: 35px;
 	padding-left: 40px;
-`;
+
+`
+
 
 const StlyedHr = styled.hr`
 	margin-top: 15px;
 	margin-right: 40px;
 	margin-bottom: 15px;
 	margin-left: 40px;
-`;
 
-const StlyedA = styled.a`
+`
+
+const StlyedLink = styled(Link)`
 	margin-left: 120px;
-`;
+`
 
 export default function LoginPage() {
 	return (
@@ -56,13 +63,13 @@ export default function LoginPage() {
 					<StlyedLabel>비밀번호</StlyedLabel>
 					<br />
 					<InputPassword>비밀번호</InputPassword>
-					<LoginButton>로그인</LoginButton>
+					<LoginBtn>로그인</LoginBtn>
 					<StlyedHr />
-					<KakaoLoginBtn>카카오로 시작하기</KakaoLoginBtn>
-					<NaverLoginBtn>네이버로 시작하기</NaverLoginBtn>
-					<StlyedA href="#">계정 찾기 / 회원 가입</StlyedA>
+					<LoginBtn type="kakao">카카오로 시작하기</LoginBtn>
+					<LoginBtn type="naver">네이버로 시작하기</LoginBtn>
+					<StlyedLink to="#">계정 찾기 / 회원 가입</StlyedLink>
 				</StlyedDiv>
 			</StlyedPage>
 		</>
-	);
+	)
 }
