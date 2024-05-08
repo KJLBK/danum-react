@@ -11,7 +11,7 @@ export default function Home() {
 	})
 	return (
 		<>
-			<h1>danum-frontend #1</h1>
+			<h1 className="text-3xl font-bold underline">danum-frontend #1</h1>
 			<p>Backend Data : {hello}</p>
 		</>
 	)
