@@ -1,14 +1,21 @@
 /** @type { import('@storybook/react').Preview } */
-const preview = {
-  parameters: {
-    actions: { argTypesRegex: "^on[A-Z].*" },
-    controls: {
-      matchers: {
-        color: /(background|color)$/i,
-        date: /Date$/,
-      },
-    },
-  },
-};
+import { fn } from '@storybook/test'
 
-export default preview;
+const preview = {
+	parameters: {
+		actions: {
+			// 명시적인 함수를 생성하고 이를 fn 함수로 감쌉니다.
+			handlers: {
+				onClick: fn(() => console.log('Clicked')),
+			},
+		},
+		controls: {
+			matchers: {
+				color: /(background|color)$/i,
+				date: /Date$/,
+			},
+		},
+	},
+}
+
+export default preview
