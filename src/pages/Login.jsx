@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useAuth } from '../store/useAuth.jsx'
+import useAuth from '../store/useAuth.jsx'
 import axios from 'axios'
 
 export default function Login() {
