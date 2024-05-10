@@ -13,6 +13,10 @@ export default defineConfig({
 				changeOrigin: true,
 				// rewrite: (path) => path.replace(/^\/api/, ''),
 			},
+			'/member': {
+				target: 'http://43.203.8.51:8080',
+				changeOrigin: true,
+			},
 		},
 	},
 })
