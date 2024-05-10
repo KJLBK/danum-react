@@ -5,7 +5,7 @@ export default function Home() {
 	const [hello, setHello] = useState('')
 
 	useEffect(() => {
-		axios.get('/api/test').then((res) => {
+		axios.get('/api/api/test').then((res) => {
 			setHello(res.data)
 		})
 	})
