@@ -10,8 +10,6 @@ const useAuth = create(
 		{
 			name: 'auth-storage',
 			storage: localStorage,
-			serialize: (state) => JSON.stringify(state),
-			deserialize: (str) => JSON.parse(str),
 		},
 	),
 )

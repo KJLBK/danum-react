@@ -12,8 +12,9 @@ export default function Login() {
 		e.preventDefault()
 		setError('')
 		try {
+			const email = username
 			const response = await axios.post('/member/login', {
-				username,
+				email,
 				password,
 			})
 			const { jwt } = response.data
