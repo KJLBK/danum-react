@@ -3,24 +3,34 @@ import useAuth from '../store/useAuth.jsx'
 import axios from 'axios'
 
 export default function Login() {
-	const [username, setUsername] = useState('')
+	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
 	const [error, setError] = useState('')
 	const setToken = useAuth((state) => state.setToken)
 
 	const handleSubmit = async (e) => {
+		//TO DO: 초기화
 		e.preventDefault()
 		setError('')
 		try {
-			const email = username
+			//TO DO: Axios로 로그인 값 반환
 			const response = await axios.post('/member/login', {
 				email,
 				password,
 			})
-			const { jwt } = response.data
+			//TO DO: 로그인 된거 jwt 처리
+
+			const data = response.data
+			const { jwt } = data
+			//TO DO: 토큰을 상태관리 라이브러리에 저장
 			if (jwt) {
+				// null 값이면 else로
 				setToken(jwt)
+			} else {
+				//TO DO: 예외처리 - 토큰 없을 때
+				throw new Error('JWT를 받지 못했습니다.')
 			}
+			//TO DO: 과정중 실패시
 		} catch (error) {
 			console.error(error)
 			setError(
@@ -30,13 +40,14 @@ export default function Login() {
 		}
 	}
 
-	const handleUsernameChange = (e) => {
-		setUsername(e.target.value)
+	const handleemailChange = (e) => {
+		setEmail(e.target.value)
 	}
 
 	const handlePasswordChange = (e) => {
 		setPassword(e.target.value)
 	}
+
 	return (
 		<>
 			<div className="flex justify-center items-center min-h-screen bg-gray-50">
@@ -54,11 +65,11 @@ export default function Login() {
 							</label>
 							<input
 								type="email"
-								value={username}
+								value={email}
 								id="email"
 								className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
 								placeholder="이메일을 입력하세요"
-								onChange={handleUsernameChange}
+								onChange={handleemailChange}
 							/>
 						</div>
 						<div>
@@ -80,7 +91,6 @@ export default function Login() {
 						{error && (
 							<div className="text-red-500 text-sm">{error}</div>
 						)}
-
 						<button
 							type="submit"
 							className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
