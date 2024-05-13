@@ -51,6 +51,25 @@ export default function Home() {
 						이후 디자인이 Fix되면.. 제대로 할 예정.
 					</p>
 				</div>
+
+				{/* 로그인 액세스 토큰 / 로그아웃 */}
+				<div className="mb-4"></div>
+				<div className="flex flex-col bg-white shadow-lg rounded-lg w-1/2 mb-8 p-5">
+					<div className="overflow-auto">
+						<h2 className="text-m font-bold  text-gray-800 mr-5">
+							Local Storage(authStorage)
+						</h2>
+						<p className="text-xs text-gray-800 bg-gray-200 rounded px-3 py-1.5 shadow-sm overflow-wrap break-words">
+							{localStorage.getItem('auth-storage')}
+						</p>
+					</div>
+
+					<div className="mx-auto mt-4">
+						<LogoutButton />
+					</div>
+				</div>
+
+				{/* 로그인페이지 */}
 				<div className="p-8 bg-white shadow-lg rounded-lg w-1/2 mb-8">
 					<div>
 						<Link
