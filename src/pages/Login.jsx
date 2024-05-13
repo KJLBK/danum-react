@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import useAuth from '../store/useAuth.jsx'
 import axios from 'axios'
+import { Link, useNavigate } from 'react-router-dom'
 
 export default function Login() {
 	const [email, setEmail] = useState('')
@@ -52,7 +52,7 @@ export default function Login() {
 			<div className="flex justify-center items-center min-h-screen bg-gray-50">
 				<div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-lg">
 					<h2 className="text-3xl font-bold text-center text-gray-900">
-						임시로그인
+						<Link to="/">임시로그인</Link>
 					</h2>
 					<form onSubmit={handleSubmit} className="space-y-6">
 						<div>
