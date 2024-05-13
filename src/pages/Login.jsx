@@ -1,12 +1,12 @@
 import { useState } from 'react'
-import useAuth from '../store/useAuth.jsx'
 import axios from 'axios'
+import { Link, useNavigate } from 'react-router-dom'
 
 export default function Login() {
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
 	const [error, setError] = useState('')
-	const setToken = useAuth((state) => state.setToken)
+	const navigate = useNavigate()
 
 	const handleSubmit = async (e) => {
 		//TO DO: 초기화
@@ -19,13 +19,12 @@ export default function Login() {
 				password,
 			})
 			//TO DO: 로그인 된거 jwt 처리
-
-			const data = response.data
-			const { jwt } = data
+			const jwt = response.data
 			//TO DO: 토큰을 상태관리 라이브러리에 저장
 			if (jwt) {
 				// null 값이면 else로
-				setToken(jwt)
+				localStorage.setItem('auth-storage', jwt)
+				navigate('/fe-test')
 			} else {
 				//TO DO: 예외처리 - 토큰 없을 때
 				throw new Error('JWT를 받지 못했습니다.')
@@ -53,7 +52,7 @@ export default function Login() {
 			<div className="flex justify-center items-center min-h-screen bg-gray-50">
 				<div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-lg">
 					<h2 className="text-3xl font-bold text-center text-gray-900">
-						임시로그인
+						<Link to="/">임시로그인</Link>
 					</h2>
 					<form onSubmit={handleSubmit} className="space-y-6">
 						<div>

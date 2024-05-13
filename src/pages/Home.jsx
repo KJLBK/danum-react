@@ -1,36 +1,27 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
+import LogoutButton from '../components/Button/LogoutButton.jsx'
 
 export default function Home() {
+	// hello : backend api 상태에 대한 state
+	// data : backend api 메세지에 대한 state
+	// token : token에 대한 state(문자열)
+	// navigate : 로그아웃 후 페이지 이동
 	const [hello, setHello] = useState('')
 	const [data, setData] = useState('')
+
+	// Backend Test Code
 	useEffect(() => {
-		axios.get('/api/test').then((res) => {
-			if (res.data === '테스트') {
-				setHello(true)
-				setData(res.data)
-			}
+		axios.get('/test').then((res) => {
+			setHello(true)
+			setData(res.data)
 		})
-	}, []) // 빈 배열을 의존성 배열로 지정하여 useEffect가 컴포넌트가 마운트될 때 한 번만 실행되도록 설정
+	}, [])
 
 	return (
 		<>
 			<div className="flex flex-col justify-center items-center min-h-screen bg-gray-100">
-				<div className="p-8 bg-white shadow-lg rounded-lg w-1/2 mb-8">
-					<div className="flex justify-between items-center">
-						<p className="text-gray-600">
-							로그인 토큰 :{' '}
-							<span className="text-gray-800 font-semibold">
-								N/A
-							</span>
-						</p>
-						<button className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded">
-							로그아웃(미구현)
-						</button>
-					</div>
-				</div>
-
 				<div className="p-8 bg-white shadow-lg rounded-lg w-1/2 mb-8">
 					<h1 className="text-4xl font-bold text-center text-gray-800">
 						DANUM DEV Mode
@@ -51,6 +42,25 @@ export default function Home() {
 						이후 디자인이 Fix되면.. 제대로 할 예정.
 					</p>
 				</div>
+
+				{/* 로그인 액세스 토큰 / 로그아웃 */}
+				<div className="mb-4"></div>
+				<div className="flex flex-col bg-white shadow-lg rounded-lg w-1/2 mb-8 p-5">
+					<div className="overflow-auto">
+						<h2 className="text-m font-bold  text-gray-800 mr-5">
+							Local Storage(authStorage)
+						</h2>
+						<p className="text-xs text-gray-800 bg-gray-200 rounded px-3 py-1.5 shadow-sm overflow-wrap break-words">
+							{localStorage.getItem('auth-storage')}
+						</p>
+					</div>
+
+					<div className="mx-auto mt-4">
+						<LogoutButton />
+					</div>
+				</div>
+
+				{/* 로그인페이지 */}
 				<div className="p-8 bg-white shadow-lg rounded-lg w-1/2 mb-8">
 					<div>
 						<Link
