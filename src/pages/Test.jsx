@@ -7,7 +7,7 @@ export default function Test() {
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				const token = localStorage.getItem('auth-storage')
+				const token = localStorage.getItem('accessToken')
 				const url = '/board/searchQuestion/1'
 				const response = await fetch(url, {
 					method: 'GET',

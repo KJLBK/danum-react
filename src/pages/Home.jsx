@@ -51,7 +51,7 @@ export default function Home() {
 							Local Storage(authStorage)
 						</h2>
 						<p className="text-xs text-gray-800 bg-gray-200 rounded px-3 py-1.5 shadow-sm overflow-wrap break-words">
-							{localStorage.getItem('auth-storage')}
+							{localStorage.getItem('accessToken')}
 						</p>
 					</div>
 

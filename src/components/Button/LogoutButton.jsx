@@ -5,7 +5,7 @@ function LogoutButton() {
 
 	const handleLogout = () => {
 		// localStorage에서 토큰 삭제
-		localStorage.removeItem('auth-storage')
+		localStorage.removeItem('accessToken')
 
 		// 사용자를 로그인 페이지로 리디렉트
 		navigate('/login')
