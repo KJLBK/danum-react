@@ -23,7 +23,7 @@ export default function Login() {
 			//TO DO: 토큰을 상태관리 라이브러리에 저장
 			if (jwt) {
 				// null 값이면 else로
-				localStorage.setItem('auth-storage', jwt)
+				localStorage.setItem('accessToken', jwt)
 				navigate('/fe-test')
 			} else {
 				//TO DO: 예외처리 - 토큰 없을 때
