@@ -1,21 +1,27 @@
 import JoinInput from '../components/JoinComponents/JoinInput.jsx'
 import JoinButton from '../components/JoinComponents/JoinButton.jsx'
 import { useState, useRef } from 'react'
+import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
 const Join = () => {
-	const [name, setName] = useState('')
-	const [email, setEmail] = useState('')
-	const [password, setPassword] = useState('')
-	const [passwordCheck, setPasswordCheck] = useState('')
-	const [phone, setPhone] = useState('')
+	const [formData, setFormData] = useState({
+		name: '',
+		email: '',
+		password: '',
+		passwordCheck: '',
+		phone: '',
+	})
 
-	const nameRef = useRef(null)
-	const emailRef = useRef(null)
-	const passwordRef = useRef(null)
-	const passwordCheckRef = useRef(null)
-	const phoneRef = useRef(null)
+	const inputRefs = {
+		name: useRef(null),
+		email: useRef(null),
+		password: useRef(null),
+		passwordCheck: useRef(null),
+		phone: useRef(null),
+	}
 
+	const navigate = useNavigate()
 	const [error, setError] = useState('')
 	const [validationMessage, setValidationMessage] = useState({
 		name: ' ',
@@ -24,6 +30,11 @@ const Join = () => {
 		passwordCheck: '',
 		phone: ' ',
 	})
+
+	const handleInputChange = (e, fieldName) => {
+		const value = e.target.value
+		setFormData({ ...formData, [fieldName]: value })
+	}
 
 	const handleSignUp = async () => {
 		let validationErrors = {
@@ -34,46 +45,44 @@ const Join = () => {
 			phone: ' ',
 		}
 
-		if (name.length < 2) {
+		if (formData.name.length < 2) {
 			validationErrors.name = '이름은 최소 2자 이상이어야 합니다.'
 			setValidationMessage(validationErrors)
-			nameRef.current.focus()
+			inputRefs.name.current.focus()
 			return
 		}
-		if (email.length < 10) {
+		if (formData.email.length < 10) {
 			validationErrors.email = '이메일은 최소 10자 이상이어야 합니다.'
 			setValidationMessage(validationErrors)
-			emailRef.current.focus()
+			inputRefs.email.current.focus()
 			return
 		}
-		if (password.length < 8) {
+		if (formData.password.length < 8) {
 			validationErrors.password = '비밀번호는 최소 8자 이상이어야 합니다.'
 			setValidationMessage(validationErrors)
-			passwordRef.current.focus()
+			inputRefs.password.current.focus()
 			return
 		}
-		if (password !== passwordCheck) {
+		if (formData.password !== formData.passwordCheck) {
 			validationErrors.passwordCheck = '비밀번호 일치하지 않습니다.'
 			setValidationMessage(validationErrors)
-			passwordCheckRef.current.focus()
+			inputRefs.passwordCheck.current.focus()
 			return
 		}
-		if (phone.length < 10) {
+		if (formData.phone.length < 10) {
 			validationErrors.phone = '전화번호는 최소 10자 이상이어야 합니다.'
 			setValidationMessage(validationErrors)
-			phoneRef.current.focus()
+			inputRefs.phone.current.focus()
 			return
 		}
 
 		try {
-			const response = await axios.post('/member/join', {
-				name,
-				email,
-				password,
-				phone,
-			})
+			const response = await axios.post('/member/join', formData)
 			/* eslint-disable no-console */
 			console.log(response)
+			if (response.status === 200) {
+				navigate('/') // 홈 페이지로 이동
+			}
 		} catch (error) {
 			console.error(error)
 			setError(
@@ -91,9 +100,9 @@ const Join = () => {
 					<JoinInput
 						type={'text'}
 						text={'이름'}
-						value={name}
-						onChange={setName}
-						EmptyRef={nameRef}
+						value={formData.name}
+						onChange={(e) => handleInputChange(e, 'name')}
+						EmptyRef={inputRefs.name}
 					/>
 					<p
 						className={`text-red-500 text-sm ${validationMessage.name ? 'block' : 'hidden'}`}
@@ -105,9 +114,9 @@ const Join = () => {
 					<JoinInput
 						type={'email'}
 						text={'이메일'}
-						value={email}
-						onChange={setEmail}
-						EmptyRef={emailRef}
+						value={formData.email}
+						onChange={(e) => handleInputChange(e, 'email')}
+						EmptyRef={inputRefs.email}
 					/>
 					<p
 						className={`text-red-500 text-sm ${validationMessage.email ? 'block' : 'hidden'}`}
@@ -119,9 +128,9 @@ const Join = () => {
 					<JoinInput
 						type={'password'}
 						text={'비밀번호'}
-						value={password}
-						onChange={setPassword}
-						EmptyRef={passwordRef}
+						value={formData.password}
+						onChange={(e) => handleInputChange(e, 'password')}
+						EmptyRef={inputRefs.password}
 					/>
 					<p
 						className={`text-red-500 text-sm ${validationMessage.password ? 'block' : 'hidden'}`}
@@ -133,9 +142,9 @@ const Join = () => {
 					<JoinInput
 						type={'password'}
 						text={'비밀번호 확인'}
-						value={passwordCheck}
-						onChange={setPasswordCheck}
-						EmptyRef={passwordCheckRef}
+						value={formData.passwordCheck}
+						onChange={(e) => handleInputChange(e, 'passwordCheck')}
+						EmptyRef={inputRefs.passwordCheck}
 					/>
 					<p
 						className={`text-red-500 text-sm ${validationMessage.passwordCheck ? 'block' : 'hidden'}`}
@@ -147,9 +156,9 @@ const Join = () => {
 					<JoinInput
 						type={'text'}
 						text={'전화번호'}
-						value={phone}
-						onChange={setPhone}
-						EmptyRef={phoneRef}
+						value={formData.phone}
+						onChange={(e) => handleInputChange(e, 'phone')}
+						EmptyRef={inputRefs.phone}
 					/>
 					<p
 						className={`text-red-500 text-sm ${validationMessage.phone ? 'block' : 'hidden'}`}

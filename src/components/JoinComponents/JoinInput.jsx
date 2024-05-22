@@ -7,7 +7,7 @@ const JoinInput = ({ type, text, value, onChange, EmptyRef }) => {
 					type={type}
 					ref={EmptyRef}
 					value={value}
-					onChange={(e) => onChange(e.target.value)}
+					onChange={onChange}
 					className="border-b border-black focus:outline-none focus:border-black flex-grow"
 				/>
 			</div>

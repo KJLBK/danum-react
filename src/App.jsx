@@ -16,7 +16,7 @@ function App() {
 				<Route path="login" element={<Login />} />
 				<Route path="fe-test" element={<Test />} />
 				{/* 게시판 */}
-				<Route path="board" element={<BoardList />} />
+				<Route path="dev-board" element={<BoardList />} />
 				<Route path="board/:id" element={<BoardDetail />} />
 				<Route path="write" element={<Write />} />
 			</Routes>
