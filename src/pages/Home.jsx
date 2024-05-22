@@ -51,7 +51,7 @@ export default function Home() {
 							Local Storage(authStorage)
 						</h2>
 						<p className="text-xs text-gray-800 bg-gray-200 rounded px-3 py-1.5 shadow-sm overflow-wrap break-words">
-							{localStorage.getItem('auth-storage')}
+							{localStorage.getItem('accessToken')}
 						</p>
 					</div>
 
@@ -69,7 +69,22 @@ export default function Home() {
 						>
 							로그인 페이지
 						</Link>
-						: 구현중(05/11~진행중)
+					</div>
+					<div>
+						<Link
+							to="/join"
+							className="text-blue-500 hover:text-blue-700 font-bold underline"
+						>
+							회원가입 페이지
+						</Link>
+					</div>
+					<div>
+						<Link
+							to="/write"
+							className="text-blue-500 hover:text-blue-700 font-bold underline"
+						>
+							글쓰기 페이지
+						</Link>
 					</div>
 				</div>
 			</div>
