@@ -1,12 +1,13 @@
-const JoinInput = ({ text, value, onChange, EmptyRef }) => {
+const JoinInput = ({ type, text, value, onChange, EmptyRef }) => {
 	return (
 		<>
-			<div className="flex items-center mb-10">
+			<div className="flex items-center mt-10">
 				<label className="w-32 mr-4">{text}</label>
 				<input
+					type={type}
 					ref={EmptyRef}
 					value={value}
-					onChange={(e) => onChange(e.target.value)}
+					onChange={onChange}
 					className="border-b border-black focus:outline-none focus:border-black flex-grow"
 				/>
 			</div>
