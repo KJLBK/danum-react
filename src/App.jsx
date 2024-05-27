@@ -17,7 +17,7 @@ function App() {
 				<Route path="fe-test" element={<Test />} />
 				{/* 게시판 */}
 				<Route path="dev-board" element={<BoardList />} />
-				<Route path="board/:id" element={<BoardDetail />} />
+				<Route path="dev-board/:id" element={<BoardDetail />} />
 				<Route path="write" element={<Write />} />
 			</Routes>
 		</BrowserRouter>

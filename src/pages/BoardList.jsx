@@ -1,56 +1,80 @@
-import { useEffect, useState } from 'react'
 import axios from 'axios'
-
-const dummyData = [
-	{ idx: 1, title: 'Board 1', category: 'A' },
-	{ idx: 2, title: 'Board 2', category: 'B' },
-	{ idx: 3, title: 'Board 3', category: 'A' },
-]
+import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const BoardList = () => {
-	const [data, setData] = useState([]) // 배열로 초기화합니다.
-	const [selectedCategory, setSelectedCategory] = useState('') // 선택된 카테고리 상태를 관리합니다.
+	const [boardList, setBoardList] = useState([])
+	const navigate = useNavigate()
+
+	const URL = '/board/view/list/category/1'
+	const Token =
+		'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhQGEiLCJyb2xlIjpbeyJhdXRob3JpdHkiOiJVU0VSIn1dLCJleHAiOjIwMTYyNjIzNjJ9.azK0eQzXB-JhkBDdqCtf5xQQQOHUfWJ64cx-PA33Mig'
 
 	useEffect(() => {
-		const fetchData = async () => {
-			try {
-				const Token =
-					'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhQGEiLCJyb2xlIjpbeyJhdXRob3JpdHkiOiJVU0VSIn1dLCJleHAiOjIwMTYyNjIzNjJ9.azK0eQzXB-JhkBDdqCtf5xQQQOHUfWJ64cx-PA33Mig'
-				// localStorage.getItem('accessToken')
-				const response = await axios.get('/board/viewlist', {
+		axios
+			.get(URL, {
+				headers: {
+					Authorization: `Bearer ${Token}`,
+				},
+			})
+			.then((response) => {
+				setBoardList(response.data)
+			})
+			.catch((error) => {
+				console.error('Error:', error)
+			})
+	}, [URL, Token])
+
+	const handleViewDetails = (id) => {
+		axios
+			.patch(
+				`/board/update`,
+				{ id: id, type: 'COUNT' },
+				{
 					headers: {
 						Authorization: `Bearer ${Token}`,
 					},
-				})
-				setData(response.data)
-			} catch (error) {
-				//console.error('Error fetching board list:', error)
-				setData(dummyData)
-			}
-		}
-		fetchData()
-	}, [])
-
-	// 카테고리가 변경될 때마다 해당 카테고리의 게시글만 필터링하여 출력합니다.
-	const filteredData = selectedCategory
-		? data.filter((item) => item.category === selectedCategory)
-		: data
+				},
+			)
+			.then(() => {
+				navigate(`/dev-board/${id}`)
+			})
+			.catch((error) => {
+				console.error('Error:', error)
+			})
+	}
 
 	return (
-		<div>
-			<select
-				value={selectedCategory}
-				onChange={(e) => setSelectedCategory(e.target.value)}
-			>
-				<option value="">All</option>
-				<option value="A">Category A</option>
-				<option value="B">Category B</option>
-			</select>
-			<ul>
-				{filteredData.map((item, index) => (
-					<li key={index}>{item.title}</li>
-				))}
-			</ul>
+		<div className="flex justify-center items-center min-h-screen bg-gray-100">
+			<div className="w-full max-w-4xl bg-white shadow-md rounded-lg p-6">
+				<h2 className="text-2xl font-bold mb-4">Board List</h2>
+				<ul className="divide-y divide-gray-200">
+					{boardList.map((item) => (
+						<li
+							key={item.id}
+							className="py-4 flex justify-between items-center"
+						>
+							<div>
+								<h3 className="text-lg font-semibold text-gray-900">
+									{item.title}
+								</h3>
+								<p className="text-sm text-gray-600">
+									작성자: {item.id}
+								</p>
+								<p className="text-sm text-gray-600">
+									조회수: {item.count}
+								</p>
+							</div>
+							<button
+								className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+								onClick={() => handleViewDetails(item.id)}
+							>
+								자세히 보기
+							</button>
+						</li>
+					))}
+				</ul>
+			</div>
 		</div>
 	)
 }
