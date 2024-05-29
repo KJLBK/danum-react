@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 
 const BoardList = () => {
 	const [boardList, setBoardList] = useState([])
+	const [searchQuery, setSearchQuery] = useState('')
 	const navigate = useNavigate()
 
 	const URL = '/board/view/list/category/1'
@@ -44,12 +45,23 @@ const BoardList = () => {
 			})
 	}
 
+	const filteredBoardList = boardList.filter((item) =>
+		item.title.toLowerCase().includes(searchQuery.toLowerCase()),
+	)
+
 	return (
 		<div className="flex justify-center items-center min-h-screen bg-gray-100">
 			<div className="w-full max-w-4xl bg-white shadow-md rounded-lg p-6">
 				<h2 className="text-2xl font-bold mb-4">Board List</h2>
+				<input
+					type="text"
+					placeholder="Search..."
+					value={searchQuery}
+					onChange={(e) => setSearchQuery(e.target.value)}
+					className="w-full p-2 mb-4 border border-gray-300 rounded"
+				/>
 				<ul className="divide-y divide-gray-200">
-					{boardList.map((item) => (
+					{filteredBoardList.map((item) => (
 						<li
 							key={item.id}
 							className="py-4 flex justify-between items-center"
@@ -59,7 +71,7 @@ const BoardList = () => {
 									{item.title}
 								</h3>
 								<p className="text-sm text-gray-600">
-									작성자: {item.id}
+									아이디: {item.id}
 								</p>
 								<p className="text-sm text-gray-600">
 									조회수: {item.count}
