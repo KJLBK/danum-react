@@ -1,50 +1,46 @@
 import { useState } from 'react'
-import axios from 'axios'
 import { Link, useNavigate } from 'react-router-dom'
+import { fetchLogin } from '../api/auth/api'
 
 export default function Login() {
-	const [email, setEmail] = useState('')
-	const [password, setPassword] = useState('')
-	const [error, setError] = useState('')
-	const navigate = useNavigate()
+	const [err, setErr] = useState()
+	const [auth, setAuth] = useState({
+		email: '',
+		password: '',
+	})
+	const nav = useNavigate()
 
-	const handleSubmit = async (e) => {
-		//TO DO: 초기화
-		e.preventDefault()
-		setError('')
+	const sendLoginRequest = async (event) => {
+		event.preventDefault() // Submit - 새로고침 방지
 		try {
-			//TO DO: Axios로 로그인 값 반환
-			const response = await axios.post('/member/login', {
-				email,
-				password,
-			})
-			//TO DO: 로그인 된거 jwt 처리
-			const jwt = response.data
-			//TO DO: 토큰을 상태관리 라이브러리에 저장
+			const jwt = await fetchLogin(auth)
 			if (jwt) {
-				// null 값이면 else로
 				localStorage.setItem('accessToken', jwt)
-				navigate('/fe-test')
+				nav('/')
 			} else {
-				//TO DO: 예외처리 - 토큰 없을 때
 				throw new Error('JWT를 받지 못했습니다.')
 			}
-			//TO DO: 과정중 실패시
-		} catch (error) {
-			console.error(error)
-			setError(
+		} catch (e) {
+			console.error(e)
+			setErr(
 				'로그인 실패: ' +
-					(error.message || '알 수 없는 오류가 발생했습니다.'),
+					(err.message || '알 수 없는 오류가 발생했습니다.'),
 			)
 		}
 	}
 
 	const handleemailChange = (e) => {
-		setEmail(e.target.value)
+		setAuth((prevAuth) => ({
+			...prevAuth,
+			email: e.target.value,
+		}))
 	}
 
 	const handlePasswordChange = (e) => {
-		setPassword(e.target.value)
+		setAuth((prevAuth) => ({
+			...prevAuth,
+			password: e.target.value,
+		}))
 	}
 
 	return (
@@ -54,7 +50,7 @@ export default function Login() {
 					<h2 className="text-3xl font-bold text-center text-gray-900">
 						<Link to="/">임시로그인</Link>
 					</h2>
-					<form onSubmit={handleSubmit} className="space-y-6">
+					<form onSubmit={sendLoginRequest} className="space-y-6">
 						<div>
 							<label
 								htmlFor="email"
@@ -64,7 +60,7 @@ export default function Login() {
 							</label>
 							<input
 								type="email"
-								value={email}
+								value={auth.email}
 								id="email"
 								className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
 								placeholder="이메일을 입력하세요"
@@ -80,15 +76,15 @@ export default function Login() {
 							</label>
 							<input
 								type="password"
-								value={password}
+								value={auth.password}
 								id="password"
 								className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
 								placeholder="비밀번호를 입력하세요"
 								onChange={handlePasswordChange}
 							/>
 						</div>
-						{error && (
-							<div className="text-red-500 text-sm">{error}</div>
+						{err && (
+							<div className="text-red-500 text-sm">{err}</div>
 						)}
 						<button
 							type="submit"
