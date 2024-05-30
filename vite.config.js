@@ -11,7 +11,6 @@ export default defineConfig({
 			'/test': {
 				target: 'http://43.203.8.51:8080',
 				changeOrigin: true,
-				// rewrite: (path) => path.replace(/^\/api/, ''),
 			},
 			'/member': {
 				target: 'http://43.203.8.51:8080',
@@ -20,6 +19,11 @@ export default defineConfig({
 			'/board': {
 				target: 'http://43.203.8.51:8080',
 				changeOrigin: true,
+			},
+			'/api': {
+				target: 'http://43.203.8.51:8080',
+				changeOrigin: true,
+				rewrite: (path) => path.replace(/^\/api/, ''),
 			},
 		},
 	},
