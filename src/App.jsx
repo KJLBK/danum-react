@@ -1,11 +1,11 @@
 import { Route, Routes } from 'react-router-dom'
-import Home from './pages/Home.jsx'
-import Join from './pages/Join.jsx'
-import Login from './pages/Login.jsx'
-import Test from './pages/Test.jsx'
-import BoardList from './pages/BoardList.jsx'
-import BoardDetail from './pages/BoardDetail.jsx'
-import Write from './pages/Write.jsx'
+import Home from './pages/Home.page.jsx'
+import Join from './pages/Join.page.jsx'
+import Login from './pages/Login.page.jsx'
+import Test from './pages/Test.page.jsx'
+import BoardList from './pages/BoardList.page.jsx'
+import BoardDetail from './pages/BoardDetail.page.jsx'
+import Write from './pages/Write.page.jsx'
 
 function App() {
 	return (
