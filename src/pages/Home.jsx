@@ -86,6 +86,14 @@ export default function Home() {
 							글쓰기 페이지
 						</Link>
 					</div>
+					<div>
+						<Link
+							to="/dev-board"
+							className="text-blue-500 hover:text-blue-700 font-bold underline"
+						>
+							게시판 페이지
+						</Link>
+					</div>
 				</div>
 			</div>
 		</>
