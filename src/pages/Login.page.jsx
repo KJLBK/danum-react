@@ -8,24 +8,15 @@ export default function Login() {
 		email: '',
 		password: '',
 	})
-	const nav = useNavigate()
+	const navigator = useNavigate()
 
 	const sendLoginRequest = async (event) => {
 		event.preventDefault() // Submit - 새로고침 방지
-		try {
-			const jwt = await fetchLogin(auth)
-			if (jwt) {
-				localStorage.setItem('accessToken', jwt)
-				nav('/')
-			} else {
-				throw new Error('JWT를 받지 못했습니다.')
-			}
-		} catch (e) {
-			console.error(e)
-			setErr(
-				'로그인 실패: ' +
-					(err.message || '알 수 없는 오류가 발생했습니다.'),
-			)
+		const authStatus = await fetchLogin(auth)
+		if (authStatus === 200) {
+			navigator('/')
+		} else if (authStatus.code === 400) {
+			setErr(authStatus.message)
 		}
 	}
 
