@@ -6,6 +6,7 @@ import Test from './pages/Test.page.jsx'
 import BoardList from './pages/BoardList.page.jsx'
 import BoardDetail from './pages/BoardDetail.page.jsx'
 import Write from './pages/Write.page.jsx'
+import MyPage from './pages/Mypage.page.jsx'
 
 function App() {
 	return (
@@ -18,6 +19,8 @@ function App() {
 			<Route path="dev-board" element={<BoardList />} />
 			<Route path="dev-board/:id" element={<BoardDetail />} />
 			<Route path="write" element={<Write />} />
+			{/* 마이페이지 */}
+			<Route path="mypage" element={<MyPage />} />
 		</Routes>
 	)
 }
