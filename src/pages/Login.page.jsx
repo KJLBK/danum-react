@@ -13,7 +13,7 @@ export default function Login() {
 	const sendLoginRequest = async (event) => {
 		event.preventDefault() // Submit - 새로고침 방지
 		const authStatus = await fetchLogin(auth)
-		if (authStatus === 200) {
+		if (authStatus.code === 200) {
 			navigator('/')
 		} else if (authStatus.code === 400) {
 			setErr(authStatus.message)
