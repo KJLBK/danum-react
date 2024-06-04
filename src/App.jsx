@@ -9,7 +9,7 @@ import Write from './pages/Write.page.jsx'
 import MyPage from './pages/Mypage.page.jsx'
 import Chat from './pages/Chat.page.jsx'
 import ChatRoomList from './pages/ChatRoomList.page.jsx'
-// import ChatRoom from './pages/ChatRoom.page.jsx'
+import ChatRoom from './pages/ChatRoom.page.jsx'
 
 function App() {
 	return (
@@ -27,7 +27,7 @@ function App() {
 			{/* 채팅페이지(TEST) */}
 			<Route path="chat" element={<Chat />} />
 			<Route path="/chat/roomlist" element={<ChatRoomList />} />
-			{/* <Route path="/chat/:roomId" element={<ChatRoom />} /> */}
+			<Route path="/chat/:roomId" element={<ChatRoom />} />
 		</Routes>
 	)
 }

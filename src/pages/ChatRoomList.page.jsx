@@ -15,15 +15,15 @@ export default function ChatRoomList() {
 	// { headers: { Authorization: `Bearer ${jwtToken}` } },
 	const createRoom = async () => {
 		const response = await axios.post(
-			'/api/chat/createroom',
+			'/api/chat/room',
 			{
 				name: roomName,
 			},
 			{ headers: { Authorization: `Bearer ${jwtToken}` } },
 		)
-		setRooms([...rooms, response.data]) // 방 리스트들을 뽑아내야해서..s
+		setRooms([...rooms, response.data.roomId]) // 방 리스트들을 뽑아내야해서..s
 		// setRooms(response.data.room_Id)
-		// console.log(response.data.room_Id)
+		// console.log(response.data.roomId)
 		// console.log(rooms)
 		setRoomName('') // init
 	}
@@ -40,7 +40,7 @@ export default function ChatRoomList() {
 			<ul>
 				{rooms.map((room) => (
 					<li key={room.room_Id}>
-						<Link to={`/chat/${room.room_Id}`}>{room.name}</Link>
+						<Link to={`/chat/${room}`}>{room}</Link>
 					</li>
 				))}
 			</ul>
