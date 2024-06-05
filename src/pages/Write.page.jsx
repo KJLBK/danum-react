@@ -18,7 +18,6 @@ export default function Write() {
 		email: '',
 		title: '',
 		content: '',
-		category: 'VILLAGE',
 	})
 
 	const handleChange = (e) => {
@@ -36,7 +35,7 @@ export default function Write() {
 				// 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhQGEiLCJyb2xlIjpbeyJhdXRob3JpdHkiOiJVU0VSIn1dLCJleHAiOjIwMTYyNjIzNjJ9.eE_k0RPskhCzhQSkFywNOJjfvKmD0KZjcOkuxVDBnVo'
 				'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhQGEiLCJyb2xlIjpbeyJhdXRob3JpdHkiOiJVU0VSIn1dLCJleHAiOjIwMTYyNjIzNjJ9.azK0eQzXB-JhkBDdqCtf5xQQQOHUfWJ64cx-PA33Mig'
 			// localStorage.getItem('accessToken')
-			await axios.post('/board/new', formData, {
+			await axios.post('/board/village/new', formData, {
 				headers: {
 					Authorization: `Bearer ${Token}`,
 				},
@@ -54,25 +53,6 @@ export default function Write() {
 				<Link to="/">글쓰기</Link>
 			</h2>
 			<form className="space-y-4" onSubmit={handleSubmit}>
-				<div>
-					<label
-						htmlFor="category"
-						className="block text-sm font-medium text-gray-700"
-					>
-						category
-					</label>
-					<select
-						id="category"
-						name="category"
-						value={formData.category}
-						onChange={handleChange}
-						required
-						className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
-					>
-						<option value="VILLAGE">VILLAGE</option>
-						<option value="QUESTION">QUESTION</option>
-					</select>
-				</div>
 				<div>
 					<label
 						htmlFor="email"

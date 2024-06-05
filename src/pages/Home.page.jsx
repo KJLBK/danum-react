@@ -88,10 +88,18 @@ export default function Home() {
 					</div>
 					<div>
 						<Link
-							to="/dev-board"
+							to="/dev-question"
 							className="text-blue-500 hover:text-blue-700 font-bold underline"
 						>
-							게시판 페이지
+							Question 게시판 페이지
+						</Link>
+					</div>
+					<div>
+						<Link
+							to="/dev-village"
+							className="text-blue-500 hover:text-blue-700 font-bold underline"
+						>
+							Village 게시판 페이지
 						</Link>
 					</div>
 				</div>

@@ -2,8 +2,8 @@ import axios from 'axios'
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-const BoardList = () => {
-	const [boardList, setBoardList] = useState([])
+const VillageList = () => {
+	const [villageList, setVillageList] = useState([])
 	const [searchQuery, setSearchQuery] = useState('')
 	const navigate = useNavigate()
 
@@ -19,7 +19,7 @@ const BoardList = () => {
 				},
 			})
 			.then((response) => {
-				setBoardList(response.data)
+				setVillageList(response.data)
 			})
 			.catch((error) => {
 				console.error('Error:', error)
@@ -41,14 +41,14 @@ const BoardList = () => {
 			})
 	}
 
-	const filteredBoardList = boardList.filter((item) =>
+	const filteredVillageList = villageList.filter((item) =>
 		item.title.toLowerCase().includes(searchQuery.toLowerCase()),
 	)
 
 	return (
 		<div className="flex justify-center items-center min-h-screen bg-gray-100">
 			<div className="w-full max-w-4xl bg-white shadow-md rounded-lg p-6">
-				<h2 className="text-2xl font-bold mb-4">Board List</h2>
+				<h2 className="text-2xl font-bold mb-4">Village List</h2>
 				<input
 					type="text"
 					placeholder="Search..."
@@ -57,7 +57,7 @@ const BoardList = () => {
 					className="w-full p-2 mb-4 border border-gray-300 rounded"
 				/>
 				<ul className="divide-y divide-gray-200">
-					{filteredBoardList.map((item) => (
+					{filteredVillageList.map((item) => (
 						<li
 							key={item.id}
 							className="py-4 flex justify-between items-center"
@@ -87,4 +87,4 @@ const BoardList = () => {
 	)
 }
 
-export default BoardList
+export default VillageList

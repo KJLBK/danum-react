@@ -8,7 +8,7 @@ export default function BoardDetail() {
 	const [likes, setLikes] = useState(0)
 	const [comment, setComment] = useState('') // 댓글 내용을 상태로 관리합니다.
 
-	const URL = `/board/view/${id}`
+	const URL = `/board/village/view/${id}`
 	const Token =
 		'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhQGEiLCJyb2xlIjpbeyJhdXRob3JpdHkiOiJVU0VSIn1dLCJleHAiOjIwMTYyNjIzNjJ9.azK0eQzXB-JhkBDdqCtf5xQQQOHUfWJ64cx-PA33Mig'
 
