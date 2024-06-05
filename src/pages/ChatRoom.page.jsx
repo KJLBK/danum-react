@@ -2,7 +2,7 @@ import {} from // useEffect,
 // useState,
 'react'
 import { useParams } from 'react-router-dom'
-// import SockJS from 'sockjs-client'
+import SockJS from 'sockjs-client'
 import * as Stomp from 'webstomp-client'
 
 export default function ChatRoom() {
@@ -34,8 +34,8 @@ export default function ChatRoom() {
 	// 	console.log('succ')
 	// })
 
-	const socket = new WebSocket(`ws://43.203.8.51:8080/ws/chat/`) // -> ws이거나 wss 인 경우
-	// const socket = new SockJS(`http://43.203.8.51:8080/ws/chat/`) // -> http이거나 https 인 경우
+	// const socket = new WebSocket(`ws://43.203.8.51:8080/ws/chat/`) // -> ws이거나 wss 인 경우
+	const socket = new SockJS(`http://43.203.8.51:8080/ws/chat/`) // -> http이거나 https 인 경우
 	const client = Stomp.over(socket)
 
 	client.connect(
