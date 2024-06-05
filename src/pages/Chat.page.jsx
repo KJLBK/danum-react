@@ -14,52 +14,74 @@ export default function Chat() {
 		'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhQGEiLCJyb2xlIjpbeyJhdXRob3JpdHkiOiJVU0VSIn1dLCJleHAiOjIwMTYyNjIzNjJ9.azK0eQzXB-JhkBDdqCtf5xQQQOHUfWJ64cx-PA33Mig'
 
 	const createRoom = async () => {
-		const response = await axios.post(
-			'/chat/createroom',
-			// TODO: name 수정
-			{ name: 'test-chat-room-2' },
-			{ headers: { Authorization: `Bearer ${jwtToken}` } },
-		)
-		setRoomId(response.data.room_id)
-		enterRoom(response.data.room_id)
+		try {
+			const response = await axios.get(
+				'/chat/room',
+				{ name: 'test-chat-room-2' },
+				{ headers: { Authorization: `Bearer ${jwtToken}` } },
+			)
+			setRoomId(response.data.roomId)
+			enterRoom(response.data.roomId)
+		} catch (error) {
+			console.error(
+				'Error creating room:',
+				error.response ? error.response.data : error.message,
+			)
+		}
 	}
 
 	const enterRoom = (roomId) => {
 		const socket = new SockJS('http://43.203.8.51:8080/ws/chat')
-		//
+		console.log(socket)
 		const client = Stomp.over(socket)
-		client.connect({ Authorization: `Bearer ${jwtToken}` }, () => {
-			client.subscribe(`/topic/room/${roomId}`, (message) => {
-				setMessages((prevMessages) => [
-					...prevMessages,
-					JSON.parse(message.body),
-				])
-			})
-			//
-			client.send(
-				'/app/chat',
-				{},
-				JSON.stringify({
-					type: 'ENTER',
-					room_id: roomId,
-					sender: sender,
-					message: '',
-				}),
-			)
-			// set
-			setStompClient(client)
-		})
+		console.log(client)
+		client.connect(
+			{ Authorization: `Bearer ${jwtToken}` },
+			(frame) => {
+				console.log('Connected:', frame)
+				client.subscribe(`/topic/chat/room/${roomId}`, (message) => {
+					console.log('Message received:', message)
+
+					setMessages((prevMessages) => [
+						...prevMessages,
+						JSON.parse(message.body),
+					])
+				})
+				console.log('Subscription to room:', roomId)
+				client.send(
+					'/app/chat/message',
+					{},
+					JSON.stringify({
+						type: 'ENTER',
+						roomId: roomId,
+						sender: sender,
+						message: '',
+					}),
+				)
+				console.log('Sent ENTER message to room:', roomId)
+				setStompClient(client)
+				console.log('Stomp client set:', client)
+			},
+			(error) => {
+				console.log('gjgj')
+				console.error('Error connecting to WebSocket:', error)
+			},
+		)
 	}
 
 	const sendMessage = () => {
 		if (stompClient) {
 			const messagePayload = {
 				type: 'TALK',
-				room_id: roomId,
+				roomId: roomId,
 				sender: sender,
 				message: newMessage,
 			}
-			stompClient.send('/app/chat', {}, JSON.stringify(messagePayload))
+			stompClient.send(
+				'/app/chat/message',
+				{},
+				JSON.stringify(messagePayload),
+			)
 			setNewMessage('')
 		}
 	}
