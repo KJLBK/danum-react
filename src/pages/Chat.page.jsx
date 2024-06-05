@@ -32,14 +32,18 @@ export default function Chat() {
 
 	const enterRoom = (roomId) => {
 		const socket = new SockJS('http://43.203.8.51:8080/ws/chat')
+		/* eslint-disable no-console */
 		console.log(socket)
 		const client = Stomp.over(socket)
+		/* eslint-disable no-console */
 		console.log(client)
 		client.connect(
 			{ Authorization: `Bearer ${jwtToken}` },
 			(frame) => {
+				/* eslint-disable no-console */
 				console.log('Connected:', frame)
 				client.subscribe(`/topic/chat/room/${roomId}`, (message) => {
+					/* eslint-disable no-console */
 					console.log('Message received:', message)
 
 					setMessages((prevMessages) => [
@@ -47,6 +51,7 @@ export default function Chat() {
 						JSON.parse(message.body),
 					])
 				})
+				/* eslint-disable no-console */
 				console.log('Subscription to room:', roomId)
 				client.send(
 					'/app/chat/message',
@@ -58,11 +63,14 @@ export default function Chat() {
 						message: '',
 					}),
 				)
+				/* eslint-disable no-console */
 				console.log('Sent ENTER message to room:', roomId)
 				setStompClient(client)
+				/* eslint-disable no-console */
 				console.log('Stomp client set:', client)
 			},
 			(error) => {
+				/* eslint-disable no-console */
 				console.log('gjgj')
 				console.error('Error connecting to WebSocket:', error)
 			},
