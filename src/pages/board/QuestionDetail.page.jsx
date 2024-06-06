@@ -8,7 +8,7 @@ export default function QuestionDetail() {
 	const [likes, setLikes] = useState(0)
 	const [comment, setComment] = useState('') // 댓글 내용을 상태로 관리합니다.
 
-	const URL = `/board/question/view/${id}`
+	const URL = `/board/question/show/${id}`
 	const Token =
 		'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhQGEiLCJyb2xlIjpbeyJhdXRob3JpdHkiOiJVU0VSIn1dLCJleHAiOjIwMTYyNjIzNjJ9.azK0eQzXB-JhkBDdqCtf5xQQQOHUfWJ64cx-PA33Mig'
 
@@ -29,10 +29,9 @@ export default function QuestionDetail() {
 	}, [URL, Token])
 
 	const handleLike = () => {
-		setLikes(likes + 1)
 		axios
-			.patch(
-				`/board/update`,
+			.put(
+				`/board/question/like/${id}`,
 				{ id: id, type: 'LIKE' },
 				{
 					headers: {
@@ -40,6 +39,18 @@ export default function QuestionDetail() {
 					},
 				},
 			)
+			.then(() => {
+				// PUT 요청이 성공한 후 최신 좋아요 숫자를 받아옴
+				return axios.get(`/board/question/like/${id}`, {
+					headers: {
+						Authorization: `Bearer ${Token}`,
+					},
+				})
+			})
+			.then((response) => {
+				// 최신 좋아요 숫자로 상태 업데이트
+				setLikes(response.data.likes)
+			})
 			.catch((error) => {
 				console.error('Error:', error)
 			})
@@ -48,7 +59,7 @@ export default function QuestionDetail() {
 	// const handleCommentSubmit = () => {
 	// 	axios
 	// 		.post(
-	// 			'/comment/new',
+	// 			'/board/question/comment/new',
 	// 			{
 	// 				board_id: id,
 	// 				member_email: questionData.email,
@@ -61,7 +72,7 @@ export default function QuestionDetail() {
 	// 			},
 	// 		)
 	// 		.then((response) => {
-	// 			console.log('Comment submitted successfully')
+	// 			//console.log('Comment submitted successfully')
 	// 			// 댓글 전송이 성공했을 때의 작업 추가 (예: 성공 메시지 출력 또는 페이지 새로고침)
 	// 		})
 	// 		.catch((error) => {
