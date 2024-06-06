@@ -110,6 +110,14 @@ export default function Home() {
 							Village 게시판 페이지
 						</Link>
 					</div>
+					<div>
+						<Link
+							to="/mypage"
+							className="text-blue-500 hover:text-blue-700 font-bold underline"
+						>
+							마이페이지
+						</Link>
+					</div>
 				</div>
 			</div>
 		</>
