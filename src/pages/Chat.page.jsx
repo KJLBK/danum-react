@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { useState } from 'react'
 import SockJS from 'sockjs-client'
+
 import Stomp from 'stompjs'
 
 export default function Chat() {
@@ -15,13 +16,16 @@ export default function Chat() {
 
 	const createRoom = async () => {
 		try {
-			const response = await axios.get(
-				'/chat/room',
-				{ name: 'test-chat-room-2' },
+			const response = await axios.post(
+				'/seungmin/chat/room',
+				{ name: 'room1' },
 				{ headers: { Authorization: `Bearer ${jwtToken}` } },
 			)
+			console.log('2111212')
 			setRoomId(response.data.roomId)
+			console.log('21112122')
 			enterRoom(response.data.roomId)
+			console.log('211121222')
 		} catch (error) {
 			console.error(
 				'Error creating room:',
@@ -31,9 +35,12 @@ export default function Chat() {
 	}
 
 	const enterRoom = (roomId) => {
-		const socket = new SockJS('http://43.203.8.51:8080/ws/chat')
-		/* eslint-disable no-console */
+		console.log('socket')
+		const socket = new SockJS('/seungmin/ws-stomp')
+		// const socket = new WebSocket(`ws://43.203.8.51:8080/ws-stomp`) // -> ws이거나 wss 인 경우
 		console.log(socket)
+
+		/* eslint-disable no-console */
 		const client = Stomp.over(socket)
 		/* eslint-disable no-console */
 		console.log(client)
@@ -42,7 +49,7 @@ export default function Chat() {
 			(frame) => {
 				/* eslint-disable no-console */
 				console.log('Connected:', frame)
-				client.subscribe(`/topic/chat/room/${roomId}`, (message) => {
+				client.subscribe(`/chat/room/enter/${roomId}`, (message) => {
 					/* eslint-disable no-console */
 					console.log('Message received:', message)
 
@@ -54,7 +61,7 @@ export default function Chat() {
 				/* eslint-disable no-console */
 				console.log('Subscription to room:', roomId)
 				client.send(
-					'/app/chat/message',
+					'/chat/message',
 					{},
 					JSON.stringify({
 						type: 'ENTER',
@@ -86,7 +93,7 @@ export default function Chat() {
 				message: newMessage,
 			}
 			stompClient.send(
-				'/app/chat/message',
+				'pub/chat/room',
 				{},
 				JSON.stringify(messagePayload),
 			)

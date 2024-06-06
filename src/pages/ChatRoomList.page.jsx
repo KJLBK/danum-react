@@ -15,7 +15,7 @@ export default function ChatRoomList() {
 	// { headers: { Authorization: `Bearer ${jwtToken}` } },
 	const createRoom = async () => {
 		const response = await axios.post(
-			'/api/chat/room',
+			'/seungmin/chat/room',
 			{
 				name: roomName,
 			},

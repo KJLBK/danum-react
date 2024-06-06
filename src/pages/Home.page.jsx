@@ -16,6 +16,7 @@ export default function Home() {
 		axios.get('/test').then((res) => {
 			setHello(true)
 			setData(res.data)
+			console.log(res)
 		})
 	}, [])
 

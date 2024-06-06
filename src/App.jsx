@@ -26,8 +26,8 @@ function App() {
 			<Route path="mypage" element={<MyPage />} />
 			{/* 채팅페이지(TEST) */}
 			<Route path="chat" element={<Chat />} />
-			<Route path="/chat/roomlist" element={<ChatRoomList />} />
-			<Route path="/chat/:roomId" element={<ChatRoom />} />
+			<Route path="chat/roomlist" element={<ChatRoomList />} />
+			<Route path="chat/:roomId" element={<ChatRoom />} />
 		</Routes>
 	)
 }
