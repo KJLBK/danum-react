@@ -2,13 +2,13 @@ import axios from 'axios'
 import { useParams } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 
-export default function BoardDetail() {
+export default function VillageDetail() {
 	const { id } = useParams()
-	const [boardData, setBoardData] = useState('')
+	const [villageData, setVillageData] = useState('')
 	const [likes, setLikes] = useState(0)
 	const [comment, setComment] = useState('') // 댓글 내용을 상태로 관리합니다.
 
-	const URL = `/board/village/view/${id}`
+	const URL = `/board/village/show/${id}`
 	const Token =
 		'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhQGEiLCJyb2xlIjpbeyJhdXRob3JpdHkiOiJVU0VSIn1dLCJleHAiOjIwMTYyNjIzNjJ9.azK0eQzXB-JhkBDdqCtf5xQQQOHUfWJ64cx-PA33Mig'
 
@@ -20,7 +20,7 @@ export default function BoardDetail() {
 				},
 			})
 			.then((response) => {
-				setBoardData(response.data)
+				setVillageData(response.data)
 				setLikes(response.data.like)
 			})
 			.catch((error) => {
@@ -51,7 +51,7 @@ export default function BoardDetail() {
 	// 			'/comment/new',
 	// 			{
 	// 				board_id: id,
-	// 				member_email: boardData.email,
+	// 				member_email: villageData.email,
 	// 				content: comment,
 	// 			},
 	// 			{
@@ -73,10 +73,11 @@ export default function BoardDetail() {
 			<div className="bg-white border border-gray-300 rounded-lg p-8 shadow-lg mx-4 md:mx-0">
 				<div className="px-4 sm:px-0">
 					<h3 className="text-base font-semibold leading-7 text-gray-900">
-						{boardData.title}
+						{villageData.title}
 					</h3>
 					<p className="mt-1 max-w-2xl text-sm leading-6 text-gray-500">
-						작성자 : {boardData.id}, 작성일 : {boardData.created_at}
+						작성자 : {villageData.id}, 작성일 :{' '}
+						{villageData.created_at}
 					</p>
 				</div>
 				<div className="mt-6 border-t border-gray-100">
@@ -87,11 +88,11 @@ export default function BoardDetail() {
 							</dt>
 							<br></br>
 							<dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-								{boardData.content}
+								{villageData.content}
 							</dd>
 						</div>
 						<p className="mt-1 max-w-2xl text-sm leading-6 text-gray-500">
-							조회수 : {boardData.count}
+							조회수 : {villageData.count}
 						</p>
 						<button
 							className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"

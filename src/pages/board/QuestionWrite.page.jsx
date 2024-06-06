@@ -13,7 +13,7 @@ import axios from 'axios'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
-export default function Write() {
+export default function QuestionWrite() {
 	const [formData, setFormData] = useState({
 		email: '',
 		title: '',
@@ -35,7 +35,7 @@ export default function Write() {
 				// 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhQGEiLCJyb2xlIjpbeyJhdXRob3JpdHkiOiJVU0VSIn1dLCJleHAiOjIwMTYyNjIzNjJ9.eE_k0RPskhCzhQSkFywNOJjfvKmD0KZjcOkuxVDBnVo'
 				'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhQGEiLCJyb2xlIjpbeyJhdXRob3JpdHkiOiJVU0VSIn1dLCJleHAiOjIwMTYyNjIzNjJ9.azK0eQzXB-JhkBDdqCtf5xQQQOHUfWJ64cx-PA33Mig'
 			// localStorage.getItem('accessToken')
-			await axios.post('/board/village/new', formData, {
+			await axios.post('/board/question/new', formData, {
 				headers: {
 					Authorization: `Bearer ${Token}`,
 				},
@@ -50,7 +50,7 @@ export default function Write() {
 	return (
 		<div className="max-w-4xl mx-auto p-5">
 			<h2 className="text-2xl font-bold mb-6">
-				<Link to="/">글쓰기</Link>
+				<Link to="/">Question 글쓰기</Link>
 			</h2>
 			<form className="space-y-4" onSubmit={handleSubmit}>
 				<div>

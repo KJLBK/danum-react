@@ -13,7 +13,7 @@ import axios from 'axios'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
-export default function Write() {
+export default function VillageWrite() {
 	const [formData, setFormData] = useState({
 		email: '',
 		title: '',
@@ -50,7 +50,7 @@ export default function Write() {
 	return (
 		<div className="max-w-4xl mx-auto p-5">
 			<h2 className="text-2xl font-bold mb-6">
-				<Link to="/">글쓰기</Link>
+				<Link to="/">Village 글쓰기</Link>
 			</h2>
 			<form className="space-y-4" onSubmit={handleSubmit}>
 				<div>

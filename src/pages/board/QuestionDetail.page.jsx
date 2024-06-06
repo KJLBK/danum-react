@@ -2,13 +2,13 @@ import axios from 'axios'
 import { useParams } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 
-export default function BoardDetail() {
+export default function QuestionDetail() {
 	const { id } = useParams()
-	const [boardData, setBoardData] = useState('')
+	const [questionData, setQuestionData] = useState('')
 	const [likes, setLikes] = useState(0)
 	const [comment, setComment] = useState('') // 댓글 내용을 상태로 관리합니다.
 
-	const URL = `/board/village/view/${id}`
+	const URL = `/board/question/show/${id}`
 	const Token =
 		'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhQGEiLCJyb2xlIjpbeyJhdXRob3JpdHkiOiJVU0VSIn1dLCJleHAiOjIwMTYyNjIzNjJ9.azK0eQzXB-JhkBDdqCtf5xQQQOHUfWJ64cx-PA33Mig'
 
@@ -20,7 +20,7 @@ export default function BoardDetail() {
 				},
 			})
 			.then((response) => {
-				setBoardData(response.data)
+				setQuestionData(response.data)
 				setLikes(response.data.like)
 			})
 			.catch((error) => {
@@ -29,10 +29,9 @@ export default function BoardDetail() {
 	}, [URL, Token])
 
 	const handleLike = () => {
-		setLikes(likes + 1)
 		axios
-			.patch(
-				`/board/update`,
+			.put(
+				`/board/question/like/${id}`,
 				{ id: id, type: 'LIKE' },
 				{
 					headers: {
@@ -40,6 +39,18 @@ export default function BoardDetail() {
 					},
 				},
 			)
+			.then(() => {
+				// PUT 요청이 성공한 후 최신 좋아요 숫자를 받아옴
+				return axios.get(`/board/question/like/${id}`, {
+					headers: {
+						Authorization: `Bearer ${Token}`,
+					},
+				})
+			})
+			.then((response) => {
+				// 최신 좋아요 숫자로 상태 업데이트
+				setLikes(response.data.likes)
+			})
 			.catch((error) => {
 				console.error('Error:', error)
 			})
@@ -48,10 +59,10 @@ export default function BoardDetail() {
 	// const handleCommentSubmit = () => {
 	// 	axios
 	// 		.post(
-	// 			'/comment/new',
+	// 			'/board/question/comment/new',
 	// 			{
 	// 				board_id: id,
-	// 				member_email: boardData.email,
+	// 				member_email: questionData.email,
 	// 				content: comment,
 	// 			},
 	// 			{
@@ -61,7 +72,7 @@ export default function BoardDetail() {
 	// 			},
 	// 		)
 	// 		.then((response) => {
-	// 			console.log('Comment submitted successfully')
+	// 			//console.log('Comment submitted successfully')
 	// 			// 댓글 전송이 성공했을 때의 작업 추가 (예: 성공 메시지 출력 또는 페이지 새로고침)
 	// 		})
 	// 		.catch((error) => {
@@ -73,10 +84,11 @@ export default function BoardDetail() {
 			<div className="bg-white border border-gray-300 rounded-lg p-8 shadow-lg mx-4 md:mx-0">
 				<div className="px-4 sm:px-0">
 					<h3 className="text-base font-semibold leading-7 text-gray-900">
-						{boardData.title}
+						{questionData.title}
 					</h3>
 					<p className="mt-1 max-w-2xl text-sm leading-6 text-gray-500">
-						작성자 : {boardData.id}, 작성일 : {boardData.created_at}
+						작성자 : {questionData.id}, 작성일 :{' '}
+						{questionData.created_at}
 					</p>
 				</div>
 				<div className="mt-6 border-t border-gray-100">
@@ -87,11 +99,11 @@ export default function BoardDetail() {
 							</dt>
 							<br></br>
 							<dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-								{boardData.content}
+								{questionData.content}
 							</dd>
 						</div>
 						<p className="mt-1 max-w-2xl text-sm leading-6 text-gray-500">
-							조회수 : {boardData.count}
+							조회수 : {questionData.count}
 						</p>
 						<button
 							className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
