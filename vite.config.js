@@ -25,6 +25,16 @@ export default defineConfig({
 				changeOrigin: true,
 				rewrite: (path) => path.replace(/^\/api/, ''),
 			},
+			'/sungjun': {
+				target: 'http://118.32.97.217:8080',
+				changeOrigin: true,
+				rewrite: (path) => path.replace(/^\/sungjun/, ''),
+			},
+			'/seungmin': {
+				target: 'http://125.141.52.238:8080',
+				changeOrigin: true,
+				rewrite: (path) => path.replace(/^\/seungmin/, ''),
+			},
 		},
 	},
 	define: {
