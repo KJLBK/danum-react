@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react'
 export default function QuestionDetail() {
 	const { id } = useParams()
 	const [questionData, setQuestionData] = useState('')
-	const [likes, setLikes] = useState(0)
+	//const [likes, setLikes] = useState(0)
 	const [comment, setComment] = useState('') // 댓글 내용을 상태로 관리합니다.
 
 	const URL = `/board/question/show/${id}`
@@ -21,40 +21,40 @@ export default function QuestionDetail() {
 			})
 			.then((response) => {
 				setQuestionData(response.data)
-				setLikes(response.data.like)
+				//setLikes(response.data.like)
 			})
 			.catch((error) => {
 				console.error('Error:', error)
 			})
 	}, [URL, Token])
 
-	const handleLike = () => {
-		axios
-			.put(
-				`/board/question/like/${id}`,
-				{ id: id, type: 'LIKE' },
-				{
-					headers: {
-						Authorization: `Bearer ${Token}`,
-					},
-				},
-			)
-			.then(() => {
-				// PUT 요청이 성공한 후 최신 좋아요 숫자를 받아옴
-				return axios.get(`/board/question/like/${id}`, {
-					headers: {
-						Authorization: `Bearer ${Token}`,
-					},
-				})
-			})
-			.then((response) => {
-				// 최신 좋아요 숫자로 상태 업데이트
-				setLikes(response.data.likes)
-			})
-			.catch((error) => {
-				console.error('Error:', error)
-			})
-	}
+	// const handleLike = () => {
+	// 	axios
+	// 		.put(
+	// 			`/board/question/like/${id}`,
+	// 			{ id: id, type: 'LIKE' },
+	// 			{
+	// 				headers: {
+	// 					Authorization: `Bearer ${Token}`,
+	// 				},
+	// 			},
+	// 		)
+	// 		.then(() => {
+	// 			// PUT 요청이 성공한 후 최신 좋아요 숫자를 받아옴
+	// 			return axios.get(`/board/question/like/${id}`, {
+	// 				headers: {
+	// 					Authorization: `Bearer ${Token}`,
+	// 				},
+	// 			})
+	// 		})
+	// 		.then((response) => {
+	// 			// 최신 좋아요 숫자로 상태 업데이트
+	// 			setLikes(response.data.likes)
+	// 		})
+	// 		.catch((error) => {
+	// 			console.error('Error:', error)
+	// 		})
+	// }
 
 	// const handleCommentSubmit = () => {
 	// 	axios
@@ -87,7 +87,7 @@ export default function QuestionDetail() {
 						{questionData.title}
 					</h3>
 					<p className="mt-1 max-w-2xl text-sm leading-6 text-gray-500">
-						작성자 : {questionData.id}, 작성일 :{' '}
+						작성자 : {questionData.email}, 작성일 :{' '}
 						{questionData.created_at}
 					</p>
 				</div>
@@ -102,15 +102,15 @@ export default function QuestionDetail() {
 								{questionData.content}
 							</dd>
 						</div>
-						<p className="mt-1 max-w-2xl text-sm leading-6 text-gray-500">
+						{/* <p className="mt-1 max-w-2xl text-sm leading-6 text-gray-500">
 							조회수 : {questionData.count}
-						</p>
-						<button
+						</p> */}
+						{/* <button
 							className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
 							onClick={handleLike}
 						>
 							좋아요 {likes}
-						</button>
+						</button> */}
 						<div className="mt-4">
 							<textarea
 								className="w-full border border-gray-300 rounded-lg p-2"

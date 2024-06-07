@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react'
 export default function VillageDetail() {
 	const { id } = useParams()
 	const [villageData, setVillageData] = useState('')
-	const [likes, setLikes] = useState(0)
+	//const [likes, setLikes] = useState(0)
 	const [comment, setComment] = useState('') // 댓글 내용을 상태로 관리합니다.
 
 	const URL = `/board/village/show/${id}`
@@ -21,29 +21,29 @@ export default function VillageDetail() {
 			})
 			.then((response) => {
 				setVillageData(response.data)
-				setLikes(response.data.like)
+				//setLikes(response.data.like)
 			})
 			.catch((error) => {
 				console.error('Error:', error)
 			})
 	}, [URL, Token])
 
-	const handleLike = () => {
-		setLikes(likes + 1)
-		axios
-			.patch(
-				`/board/update`,
-				{ id: id, type: 'LIKE' },
-				{
-					headers: {
-						Authorization: `Bearer ${Token}`,
-					},
-				},
-			)
-			.catch((error) => {
-				console.error('Error:', error)
-			})
-	}
+	// const handleLike = () => {
+	// 	setLikes(likes + 1)
+	// 	axios
+	// 		.patch(
+	// 			`/board/update`,
+	// 			{ id: id, type: 'LIKE' },
+	// 			{
+	// 				headers: {
+	// 					Authorization: `Bearer ${Token}`,
+	// 				},
+	// 			},
+	// 		)
+	// 		.catch((error) => {
+	// 			console.error('Error:', error)
+	// 		})
+	// }
 
 	// const handleCommentSubmit = () => {
 	// 	axios
@@ -76,7 +76,7 @@ export default function VillageDetail() {
 						{villageData.title}
 					</h3>
 					<p className="mt-1 max-w-2xl text-sm leading-6 text-gray-500">
-						작성자 : {villageData.id}, 작성일 :{' '}
+						작성자 : {villageData.email}, 작성일 :{' '}
 						{villageData.created_at}
 					</p>
 				</div>
@@ -91,7 +91,7 @@ export default function VillageDetail() {
 								{villageData.content}
 							</dd>
 						</div>
-						<p className="mt-1 max-w-2xl text-sm leading-6 text-gray-500">
+						{/* <p className="mt-1 max-w-2xl text-sm leading-6 text-gray-500">
 							조회수 : {villageData.count}
 						</p>
 						<button
@@ -99,7 +99,7 @@ export default function VillageDetail() {
 							onClick={handleLike}
 						>
 							좋아요 {likes}
-						</button>
+						</button> */}
 						<div className="mt-4">
 							<textarea
 								className="w-full border border-gray-300 rounded-lg p-2"
