@@ -67,11 +67,11 @@ const VillageList = () => {
 									{item.title}
 								</h3>
 								<p className="text-sm text-gray-600">
-									아이디: {item.id}
+									아이디: {item.email}
 								</p>
-								<p className="text-sm text-gray-600">
+								{/* <p className="text-sm text-gray-600">
 									조회수: {item.count}
-								</p>
+								</p> */}
 							</div>
 							<button
 								className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
