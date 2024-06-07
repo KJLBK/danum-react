@@ -59,7 +59,7 @@ const QuestionList = () => {
 				<ul className="divide-y divide-gray-200">
 					{filteredQuestionList.map((item) => (
 						<li
-							key={item.email}
+							key={item.id}
 							className="py-4 flex justify-between items-center"
 						>
 							<div>
@@ -67,7 +67,7 @@ const QuestionList = () => {
 									{item.title}
 								</h3>
 								<p className="text-sm text-gray-600">
-									아이디: {item.email}
+									아이디: {item.id}
 								</p>
 								{/* <p className="text-sm text-gray-600">
 									조회수: {item.count}

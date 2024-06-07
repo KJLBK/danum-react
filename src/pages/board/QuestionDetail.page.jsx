@@ -87,7 +87,7 @@ export default function QuestionDetail() {
 						{questionData.title}
 					</h3>
 					<p className="mt-1 max-w-2xl text-sm leading-6 text-gray-500">
-						작성자 : {questionData.email}, 작성일 :{' '}
+						작성자 : {questionData.id}, 작성일 :{' '}
 						{questionData.created_at}
 					</p>
 				</div>
