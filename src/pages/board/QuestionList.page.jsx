@@ -26,15 +26,15 @@ const QuestionList = () => {
 			})
 	}, [URL, Token])
 
-	const handleViewDetails = (id) => {
+	const handleViewDetails = (question_id) => {
 		axios
-			.get(`/board/question/show/${id}`, {
+			.get(`/board/question/show/${question_id}`, {
 				headers: {
 					Authorization: `Bearer ${Token}`,
 				},
 			})
 			.then(() => {
-				navigate(`/dev-question/${id}`)
+				navigate(`/dev-question/${question_id}`)
 			})
 			.catch((error) => {
 				console.error('Error:', error)
@@ -59,7 +59,7 @@ const QuestionList = () => {
 				<ul className="divide-y divide-gray-200">
 					{filteredQuestionList.map((item) => (
 						<li
-							key={item.id}
+							key={item.question_id}
 							className="py-4 flex justify-between items-center"
 						>
 							<div>
@@ -67,7 +67,7 @@ const QuestionList = () => {
 									{item.title}
 								</h3>
 								<p className="text-sm text-gray-600">
-									아이디: {item.id}
+									작성자: {item.email}
 								</p>
 								{/* <p className="text-sm text-gray-600">
 									조회수: {item.count}
@@ -75,7 +75,9 @@ const QuestionList = () => {
 							</div>
 							<button
 								className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-								onClick={() => handleViewDetails(item.id)}
+								onClick={() =>
+									handleViewDetails(item.question_id)
+								}
 							>
 								자세히 보기
 							</button>

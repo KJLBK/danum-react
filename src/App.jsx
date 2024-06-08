@@ -26,8 +26,11 @@ function App() {
 			<Route path="dev-village" element={<VillageList />} />
 			<Route path="question-write" element={<QuestionWrite />} />
 			<Route path="village-write" element={<VillageWrite />} />
-			<Route path="dev-question/:id" element={<QuestionDetail />} />
-			<Route path="dev-village/:id" element={<VillageDetail />} />
+			<Route
+				path="dev-question/:question_id"
+				element={<QuestionDetail />}
+			/>
+			<Route path="dev-village/:village_id" element={<VillageDetail />} />
 			{/* 마이페이지 */}
 			<Route path="mypage" element={<MyPage />} />
 			{/* 채팅페이지(TEST) */}
