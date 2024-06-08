@@ -1,6 +1,4 @@
-import {} from // useEffect,
-// useState,
-'react'
+// import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import SockJS from 'sockjs-client'
 import * as Stomp from 'webstomp-client'
@@ -9,7 +7,6 @@ export default function ChatRoom() {
 	const { roomId } = useParams()
 	// const [messages, setMessages] = useState([])
 	// const jwtToken =
-
 	// 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhQGEiLCJyb2xlIjpbeyJhdXRob3JpdHkiOiJVU0VSIn1dLCJleHAiOjIwMTYyNjIzNjJ9.azK0eQzXB-JhkBDdqCtf5xQQQOHUfWJ64cx-PA33Mig'
 
 	// useEffect(() => {
@@ -35,7 +32,7 @@ export default function ChatRoom() {
 	// })
 
 	// const socket = new WebSocket(`ws://43.203.8.51:8080/ws/chat/`) // -> ws이거나 wss 인 경우
-	const socket = new SockJS(`http://43.203.8.51:8080/ws/chat/`) // -> http이거나 https 인 경우
+	const socket = new SockJS(`/api/ws-stomp`) // -> http이거나 https 인 경우
 	const client = Stomp.over(socket)
 
 	client.connect(
@@ -45,14 +42,14 @@ export default function ChatRoom() {
 			console.log('연결됌', frame)
 
 			// 구독 예시
-			client.subscribe('/topic/messages', (message) => {
+			client.subscribe('/chat/room/enter/${roomId}', (message) => {
 				/* eslint-disable no-console */
 				console.log('메시지 수신:', message.body)
 			})
 
 			// 메시지 발송 예시
 			client.send(
-				'/app/chat',
+				'/chat/message',
 				JSON.stringify({ content: '안녕하세요!' }),
 				{},
 			)

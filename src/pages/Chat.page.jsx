@@ -15,7 +15,7 @@ export default function Chat() {
 
 	const createRoom = async () => {
 		try {
-			const response = await axios.get(
+			const response = await axios.post(
 				'/api/chat/room',
 				{ name: 'test-chat-room-2' },
 				{ headers: { Authorization: `Bearer ${jwtToken}` } },
@@ -86,7 +86,7 @@ export default function Chat() {
 				message: newMessage,
 			}
 			stompClient.send(
-				'/app/chat/message',
+				'/pub/chat/message',
 				{},
 				JSON.stringify(messagePayload),
 			)
