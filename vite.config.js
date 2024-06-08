@@ -13,15 +13,15 @@ export default defineConfig({
 				changeOrigin: true,
 			},
 			'/member': {
-				target: 'http://43.203.8.51:8080',
+				target: 'http://211.46.77.6:8080',
 				changeOrigin: true,
 			},
 			'/board': {
-				target: 'http://43.203.8.51:8080',
+				target: 'http://211.46.77.6:8080',
 				changeOrigin: true,
 			},
 			'/api': {
-				target: 'http://43.203.8.51:8080',
+				target: 'http://211.46.77.6:8080',
 				changeOrigin: true,
 				rewrite: (path) => path.replace(/^\/api/, ''),
 			},
