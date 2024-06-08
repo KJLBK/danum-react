@@ -51,7 +51,7 @@ export default function QuestionWrite() {
 				// 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhQGEiLCJyb2xlIjpbeyJhdXRob3JpdHkiOiJVU0VSIn1dLCJleHAiOjIwMTYyNjIzNjJ9.eE_k0RPskhCzhQSkFywNOJjfvKmD0KZjcOkuxVDBnVo'
 				'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhQGEiLCJyb2xlIjpbeyJhdXRob3JpdHkiOiJVU0VSIn1dLCJleHAiOjIwMTYyNjIzNjJ9.azK0eQzXB-JhkBDdqCtf5xQQQOHUfWJ64cx-PA33Mig'
 			// localStorage.getItem('accessToken')
-			await axios.post('/board/question/new', formData, {
+			await axios.post('/api/board/question/new', formData, {
 				headers: {
 					Authorization: `Bearer ${Token}`,
 				},

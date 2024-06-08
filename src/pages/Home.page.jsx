@@ -13,7 +13,7 @@ export default function Home() {
 
 	// Backend Test Code
 	useEffect(() => {
-		axios.get('/test').then((res) => {
+		axios.get('/api/test').then((res) => {
 			setHello(true)
 			setData(res.data)
 		})

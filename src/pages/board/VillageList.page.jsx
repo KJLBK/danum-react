@@ -7,7 +7,7 @@ const VillageList = () => {
 	const [searchQuery, setSearchQuery] = useState('')
 	const navigate = useNavigate()
 
-	const URL = '/board/village/show'
+	const URL = '/api/board/village/show'
 	const Token =
 		'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhQGEiLCJyb2xlIjpbeyJhdXRob3JpdHkiOiJVU0VSIn1dLCJleHAiOjIwMTYyNjIzNjJ9.azK0eQzXB-JhkBDdqCtf5xQQQOHUfWJ64cx-PA33Mig'
 
@@ -28,7 +28,7 @@ const VillageList = () => {
 
 	const handleViewDetails = (id) => {
 		axios
-			.get(`/board/village/show/${id}`, {
+			.get(`/api/board/village/show/${id}`, {
 				headers: {
 					Authorization: `Bearer ${Token}`,
 				},
