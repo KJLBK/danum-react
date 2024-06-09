@@ -9,7 +9,7 @@ export async function updateUserDetails(answer) {
 	try {
 		const Token =
 			'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhQGEiLCJyb2xlIjpbeyJhdXRob3JpdHkiOiJVU0VSIn1dLCJleHAiOjIwMTYyNjIzNjJ9.azK0eQzXB-JhkBDdqCtf5xQQQOHUfWJ64cx-PA33Mig'
-		const response = await axios.put('/member/update', answer, {
+		const response = await axios.put('/api/member/update', answer, {
 			headers: {
 				Authorization: `Bearer ${Token}`,
 			},

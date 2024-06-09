@@ -7,7 +7,7 @@ function LogoutButton() {
 	const handleLogout = async () => {
 		try {
 			// api 로그아웃 요청(쿠키 삭제)
-			await axios.get('/logout')
+			await axios.get('/api/logout')
 
 			// localStorage에서 토큰 삭제
 			localStorage.removeItem('accessToken')
