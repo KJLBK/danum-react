@@ -1,24 +1,31 @@
-// {POST [/board/new]}
-// Methods: [POST]
-// Request Parameters: RequestBody: QuestionNewDto
-
-// email
-// title
-// content
-// category : VILLAGE, QUESTION
-
-// token : eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhQGEiLCJyb2xlIjpbeyJhdXRob3JpdHkiOiJVU0VSIn1dLCJleHAiOjIwMTYyNjIzNjJ9.eE_k0RPskhCzhQSkFywNOJjfvKmD0KZjcOkuxVDBnVo
-
 import axios from 'axios'
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { jwtDecode } from 'jwt-decode'
 
 export default function VillageWrite() {
+	const navigate = useNavigate()
+
 	const [formData, setFormData] = useState({
 		email: '',
 		title: '',
 		content: '',
 	})
+
+	useEffect(() => {
+		// 추가된 부분: useEffect 훅 사용
+		const token = localStorage.getItem('accessToken') // 로컬 스토리지에서 토큰 가져오기
+		if (token) {
+			const decoded = jwtDecode(token) // 토큰 디코드
+			if (decoded && decoded.sub) {
+				// 디코드된 토큰에서 이메일(sub) 추출
+				setFormData((prevState) => ({
+					...prevState,
+					email: decoded.sub, // 이메일을 formData의 email 필드에 설정
+				}))
+			}
+		}
+	}, [])
 
 	const handleChange = (e) => {
 		const { name, value } = e.target
@@ -41,6 +48,7 @@ export default function VillageWrite() {
 				},
 			})
 			alert('글이 성공적으로 등록되었습니다.')
+			navigate('/')
 		} catch (error) {
 			console.error('글 등록 실패', error)
 			alert('글 등록에 실패했습니다.')
@@ -67,6 +75,7 @@ export default function VillageWrite() {
 						value={formData.email}
 						onChange={handleChange}
 						required
+						disabled
 						className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
 					/>
 				</div>
