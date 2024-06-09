@@ -13,7 +13,7 @@ export default function QuestionDetail() {
 	const [editingCommentId, setEditingCommentId] = useState(null) // 현재 수정 중인 댓글 ID 상태 추가
 	const [editedContent, setEditedContent] = useState('') // 수정할 댓글 내용을 상태로 관리합니다.
 
-	const URL = `/board/question/show/${question_id}`
+	const URL = `/api/board/question/show/${question_id}`
 	const Token =
 		'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhQGEiLCJyb2xlIjpbeyJhdXRob3JpdHkiOiJVU0VSIn1dLCJleHAiOjIwMTYyNjIzNjJ9.azK0eQzXB-JhkBDdqCtf5xQQQOHUfWJ64cx-PA33Mig'
 
@@ -46,7 +46,7 @@ export default function QuestionDetail() {
 	useEffect(() => {
 		// 댓글을 가져오는 API 호출
 		axios
-			.get(`/board/question/comment/show/${question_id}`, {
+			.get(`/api/board/question/comment/show/${question_id}`, {
 				headers: {
 					Authorization: `Bearer ${Token}`,
 				},
@@ -90,7 +90,7 @@ export default function QuestionDetail() {
 	const handleCommentSubmit = () => {
 		axios
 			.post(
-				'/board/question/comment/new',
+				'/api/board/question/comment/new',
 				{
 					question_id: question_id,
 					member_email: email,
@@ -106,7 +106,7 @@ export default function QuestionDetail() {
 				alert('댓글이 성공적으로 생성되었습니다.')
 				setContent('')
 				return axios.get(
-					`/board/question/comment/show/${question_id}`,
+					`/api/board/question/comment/show/${question_id}`,
 					{
 						headers: {
 							Authorization: `Bearer ${Token}`,
@@ -125,7 +125,7 @@ export default function QuestionDetail() {
 
 	const handleCommentDelete = (comment_id) => {
 		axios
-			.delete(`/board/question/comment/delete/${comment_id}`, {
+			.delete(`/api/board/question/comment/delete/${comment_id}`, {
 				headers: {
 					Authorization: `Bearer ${Token}`,
 				},
@@ -133,7 +133,7 @@ export default function QuestionDetail() {
 			.then(() => {
 				alert('댓글이 성공적으로 삭제되었습니다.')
 				return axios.get(
-					`/board/question/comment/show/${question_id}`,
+					`/api/board/question/comment/show/${question_id}`,
 					{
 						headers: {
 							Authorization: `Bearer ${Token}`,
@@ -158,7 +158,7 @@ export default function QuestionDetail() {
 	const handleCommentUpdate = (comment_id) => {
 		axios
 			.put(
-				`/board/question/comment/update`,
+				`/api/board/question/comment/update`,
 				{
 					id: comment_id,
 					content: editedContent,
@@ -174,7 +174,7 @@ export default function QuestionDetail() {
 				setEditingCommentId(null)
 				setEditedContent('')
 				return axios.get(
-					`/board/question/comment/show/${question_id}`,
+					`/api/board/question/comment/show/${question_id}`,
 					{
 						headers: {
 							Authorization: `Bearer ${Token}`,

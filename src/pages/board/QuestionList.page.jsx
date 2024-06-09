@@ -7,7 +7,7 @@ const QuestionList = () => {
 	const [searchQuery, setSearchQuery] = useState('')
 	const navigate = useNavigate()
 
-	const URL = '/board/question/show'
+	const URL = '/api/board/question/show'
 	const Token =
 		'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhQGEiLCJyb2xlIjpbeyJhdXRob3JpdHkiOiJVU0VSIn1dLCJleHAiOjIwMTYyNjIzNjJ9.azK0eQzXB-JhkBDdqCtf5xQQQOHUfWJ64cx-PA33Mig'
 
@@ -28,13 +28,13 @@ const QuestionList = () => {
 
 	const handleViewDetails = (question_id) => {
 		axios
-			.get(`/board/question/show/${question_id}`, {
+			.get(`/api/board/question/show/${question_id}`, {
 				headers: {
 					Authorization: `Bearer ${Token}`,
 				},
 			})
 			.then(() => {
-				navigate(`/dev-question/${question_id}`)
+				navigate(`/api/dev-question/${question_id}`)
 			})
 			.catch((error) => {
 				console.error('Error:', error)

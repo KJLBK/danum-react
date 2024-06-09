@@ -7,7 +7,7 @@ const VillageList = () => {
 	const [searchQuery, setSearchQuery] = useState('')
 	const navigate = useNavigate()
 
-	const URL = '/board/village/show'
+	const URL = '/api/board/village/show'
 	const Token =
 		'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhQGEiLCJyb2xlIjpbeyJhdXRob3JpdHkiOiJVU0VSIn1dLCJleHAiOjIwMTYyNjIzNjJ9.azK0eQzXB-JhkBDdqCtf5xQQQOHUfWJ64cx-PA33Mig'
 
@@ -26,15 +26,15 @@ const VillageList = () => {
 			})
 	}, [URL, Token])
 
-	const handleViewDetails = (id) => {
+	const handleViewDetails = (village_id) => {
 		axios
-			.get(`/board/village/show/${id}`, {
+			.get(`/api/board/village/show/${village_id}`, {
 				headers: {
 					Authorization: `Bearer ${Token}`,
 				},
 			})
 			.then(() => {
-				navigate(`/dev-village/${id}`)
+				navigate(`/api/dev-village/${village_id}`)
 			})
 			.catch((error) => {
 				console.error('Error:', error)
@@ -59,7 +59,7 @@ const VillageList = () => {
 				<ul className="divide-y divide-gray-200">
 					{filteredVillageList.map((item) => (
 						<li
-							key={item.id}
+							key={item.village_id}
 							className="py-4 flex justify-between items-center"
 						>
 							<div>
@@ -67,7 +67,7 @@ const VillageList = () => {
 									{item.title}
 								</h3>
 								<p className="text-sm text-gray-600">
-									아이디: {item.email}
+									작성자: {item.email}
 								</p>
 								{/* <p className="text-sm text-gray-600">
 									조회수: {item.count}
@@ -75,7 +75,9 @@ const VillageList = () => {
 							</div>
 							<button
 								className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-								onClick={() => handleViewDetails(item.id)}
+								onClick={() =>
+									handleViewDetails(item.village_id)
+								}
 							>
 								자세히 보기
 							</button>
