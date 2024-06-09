@@ -3,7 +3,7 @@ import { jwtDecode } from 'jwt-decode'
 
 export async function fetchLogin(auth) {
 	try {
-		const response = await axios.post('/member/login', auth)
+		const response = await axios.post('/api/member/login', auth)
 		const code = response.status
 		if (response.data) {
 			localStorage.setItem('accessToken', response.data)

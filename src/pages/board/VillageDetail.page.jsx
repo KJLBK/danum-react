@@ -14,6 +14,7 @@ export default function VillageDetail() {
 	const [editedContent, setEditedContent] = useState('') // 수정할 댓글 내용을 상태로 관리합니다.
 
 	const URL = `/api/board/village/show/${village_id}`
+
 	const Token =
 		'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhQGEiLCJyb2xlIjpbeyJhdXRob3JpdHkiOiJVU0VSIn1dLCJleHAiOjIwMTYyNjIzNjJ9.azK0eQzXB-JhkBDdqCtf5xQQQOHUfWJ64cx-PA33Mig'
 

@@ -15,8 +15,8 @@ export default function Chat() {
 
 	const createRoom = async () => {
 		try {
-			const response = await axios.get(
-				'/chat/room',
+			const response = await axios.post(
+				'/api/chat/room',
 				{ name: 'test-chat-room-2' },
 				{ headers: { Authorization: `Bearer ${jwtToken}` } },
 			)
@@ -31,7 +31,7 @@ export default function Chat() {
 	}
 
 	const enterRoom = (roomId) => {
-		const socket = new SockJS('http://43.203.8.51:8080/ws/chat')
+		const socket = new SockJS('/api/ws-stomp')
 		/* eslint-disable no-console */
 		console.log(socket)
 		const client = Stomp.over(socket)
@@ -86,7 +86,7 @@ export default function Chat() {
 				message: newMessage,
 			}
 			stompClient.send(
-				'/app/chat/message',
+				'/pub/chat/message',
 				{},
 				JSON.stringify(messagePayload),
 			)

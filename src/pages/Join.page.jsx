@@ -77,7 +77,7 @@ const Join = () => {
 		}
 
 		try {
-			const response = await axios.post('/member/join', formData)
+			const response = await axios.post('/api/member/join', formData)
 			/* eslint-disable no-console */
 			console.log(response)
 			if (response.status === 200) {
