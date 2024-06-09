@@ -11,10 +11,12 @@
 
 import axios from 'axios'
 import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { jwtDecode } from 'jwt-decode'
 
 export default function QuestionWrite() {
+	const navigate = useNavigate()
+
 	const [formData, setFormData] = useState({
 		email: '',
 		title: '',
@@ -57,6 +59,7 @@ export default function QuestionWrite() {
 				},
 			})
 			alert('글이 성공적으로 등록되었습니다.')
+			navigate('/')
 		} catch (error) {
 			console.error('글 등록 실패', error)
 			alert('글 등록에 실패했습니다.')
