@@ -34,7 +34,7 @@ const QuestionList = () => {
 				},
 			})
 			.then(() => {
-				navigate(`/api/dev-question/${question_id}`)
+				navigate(`/dev-question/${question_id}`)
 			})
 			.catch((error) => {
 				console.error('Error:', error)

@@ -34,7 +34,7 @@ const VillageList = () => {
 				},
 			})
 			.then(() => {
-				navigate(`/api/dev-village/${village_id}`)
+				navigate(`/dev-village/${village_id}`)
 			})
 			.catch((error) => {
 				console.error('Error:', error)
