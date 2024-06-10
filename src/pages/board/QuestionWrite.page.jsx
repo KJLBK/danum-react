@@ -16,6 +16,7 @@ import { jwtDecode } from 'jwt-decode'
 
 export default function QuestionWrite() {
 	const navigate = useNavigate()
+	const [aiResponse, setAiResponse] = useState(null) // AI 응답 상태 추가
 
 	const [formData, setFormData] = useState({
 		email: '',
@@ -63,6 +64,26 @@ export default function QuestionWrite() {
 		} catch (error) {
 			console.error('글 등록 실패', error)
 			alert('글 등록에 실패했습니다.')
+		}
+	}
+
+	const handleAi = async () => {
+		try {
+			const adminToken =
+				'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhQGEiLCJyb2xlIjpbeyJhdXRob3JpdHkiOiJBRE1JTiJ9XSwiZXhwIjoyMDE2MjYyMzYyfQ.sUoNzSqQtO7A6eAOkUbCb4_lPL96i8xkIHyvI3X6TfU'
+			const response = await axios.post(
+				'/api/open-ai',
+				{ message: formData.content },
+				{
+					headers: {
+						Authorization: `Bearer ${adminToken}`,
+					},
+				},
+			)
+			setAiResponse(response.data)
+		} catch (error) {
+			console.error('질문 실패', error)
+			alert('질문에 실패했습니다.')
 		}
 	}
 
@@ -130,6 +151,18 @@ export default function QuestionWrite() {
 					글 올리기
 				</button>
 			</form>
+			<button
+				onClick={handleAi}
+				className="mt-4 w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+			>
+				AI에게 질문하기
+			</button>
+			{aiResponse && ( // AI 응답이 있을 경우에만 상자 표시
+				<div className="mt-6 p-4 border border-gray-300 rounded-md shadow-sm bg-gray-50">
+					<h3 className="text-lg font-bold mb-2">AI의 답변:</h3>
+					<p>{aiResponse.results[0].output.content}</p>
+				</div>
+			)}
 		</div>
 	)
 }
