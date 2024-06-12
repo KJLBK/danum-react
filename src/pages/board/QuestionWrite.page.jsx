@@ -19,7 +19,8 @@ export default function QuestionWrite() {
 		'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhQGEiLCJyb2xlIjpbeyJhdXRob3JpdHkiOiJBRE1JTiJ9XSwiZXhwIjoyMDE2MjYyMzYyfQ.sUoNzSqQtO7A6eAOkUbCb4_lPL96i8xkIHyvI3X6TfU'
 
 	const navigate = useNavigate()
-	const [aiResponse, setAiResponse] = useState(null) // AI 응답 상태 추가
+	const [userQuestion, setUserQuestion] = useState([]) // 사용자 질문 상태 추가
+	const [aiResponse, setAiResponse] = useState([]) // AI 응답 상태 추가
 
 	const [formData, setFormData] = useState({
 		email: '',
@@ -91,12 +92,19 @@ export default function QuestionWrite() {
 					},
 				},
 			)
-			setAiResponse(response.data)
+			setUserQuestion((prevQuestions) => [
+				...prevQuestions,
+				formData.content,
+			]) //새로운 질문 추가
+			setAiResponse((prevResponses) => [
+				...prevResponses,
+				response.data.message,
+			]) // 새로운 AI 응답 추가
 			setFormData((prevState) => ({
 				...prevState,
+				content: '',
 				createId: response.data.createdId, // createdId를 formData에 설정
 			}))
-			setAiResponse(response.data)
 		} catch (error) {
 			console.error('질문 실패', error)
 			alert('질문에 실패했습니다.')
@@ -169,16 +177,23 @@ export default function QuestionWrite() {
 			</form>
 			<button
 				onClick={handleAi}
-				className="mt-4 w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+				className="my-4 w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
 			>
 				AI에게 질문하기
 			</button>
-			{aiResponse && ( // AI 응답이 있을 경우에만 상자 표시
-				<div className="mt-6 p-4 border border-gray-300 rounded-md shadow-sm bg-gray-50">
-					<h3 className="text-lg font-bold mb-2">AI의 답변:</h3>
-					<p>{aiResponse.message}</p>
-				</div>
-			)}
+			<div className="space-y-4">
+				{userQuestion.map((question, index) => (
+					<div
+						key={index}
+						className="bg-blue-100 p-4 rounded-lg shadow-md"
+					>
+						<p className="text-blue-900">User: {question}</p>
+						<p className="text-green-900 mt-2">
+							AI: {aiResponse[index]}
+						</p>
+					</div>
+				))}
+			</div>
 		</div>
 	)
 }
