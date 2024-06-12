@@ -15,6 +15,9 @@ import { Link, useNavigate } from 'react-router-dom'
 import { jwtDecode } from 'jwt-decode'
 
 export default function QuestionWrite() {
+	const adminToken =
+		'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhQGEiLCJyb2xlIjpbeyJhdXRob3JpdHkiOiJBRE1JTiJ9XSwiZXhwIjoyMDE2MjYyMzYyfQ.sUoNzSqQtO7A6eAOkUbCb4_lPL96i8xkIHyvI3X6TfU'
+
 	const navigate = useNavigate()
 	const [aiResponse, setAiResponse] = useState(null) // AI 응답 상태 추가
 
@@ -22,6 +25,7 @@ export default function QuestionWrite() {
 		email: '',
 		title: '',
 		content: '',
+		createId: '',
 	})
 
 	useEffect(() => {
@@ -60,6 +64,15 @@ export default function QuestionWrite() {
 				},
 			})
 			alert('글이 성공적으로 등록되었습니다.')
+			await axios.patch(
+				`/api/open-ai/${formData.createId}`,
+				{},
+				{
+					headers: {
+						Authorization: `Bearer ${adminToken}`,
+					},
+				},
+			)
 			navigate('/')
 		} catch (error) {
 			console.error('글 등록 실패', error)
@@ -69,8 +82,6 @@ export default function QuestionWrite() {
 
 	const handleAi = async () => {
 		try {
-			const adminToken =
-				'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhQGEiLCJyb2xlIjpbeyJhdXRob3JpdHkiOiJBRE1JTiJ9XSwiZXhwIjoyMDE2MjYyMzYyfQ.sUoNzSqQtO7A6eAOkUbCb4_lPL96i8xkIHyvI3X6TfU'
 			const response = await axios.post(
 				'/api/open-ai',
 				{ message: formData.content },
@@ -80,6 +91,11 @@ export default function QuestionWrite() {
 					},
 				},
 			)
+			setAiResponse(response.data)
+			setFormData((prevState) => ({
+				...prevState,
+				createId: response.data.createdId, // createdId를 formData에 설정
+			}))
 			setAiResponse(response.data)
 		} catch (error) {
 			console.error('질문 실패', error)
@@ -160,7 +176,7 @@ export default function QuestionWrite() {
 			{aiResponse && ( // AI 응답이 있을 경우에만 상자 표시
 				<div className="mt-6 p-4 border border-gray-300 rounded-md shadow-sm bg-gray-50">
 					<h3 className="text-lg font-bold mb-2">AI의 답변:</h3>
-					<p>{aiResponse.results[0].output.content}</p>
+					<p>{aiResponse.message}</p>
 				</div>
 			)}
 		</div>
