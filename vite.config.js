@@ -13,6 +13,7 @@ export default defineConfig({
 		proxy: {
 			'/api': {
 				target: process.env.VITE_API_BASE_URL,
+				ws: true,
 				changeOrigin: true,
 				rewrite: (path) => path.replace(/^\/api/, ''),
 			},
@@ -22,3 +23,5 @@ export default defineConfig({
 		global: 'window',
 	},
 })
+/* eslint-disable no-console */
+console.log(`  ➜  Address: ${process.env.VITE_API_BASE_URL}`)
