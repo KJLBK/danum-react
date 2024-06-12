@@ -1,3 +1,4 @@
+@import '@material-tailwind/html/styles/material-tailwind.css';
 /* Tailwind directive 추가 */
 @tailwind base;
 @tailwind components;
