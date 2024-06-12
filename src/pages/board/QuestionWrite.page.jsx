@@ -21,6 +21,7 @@ export default function QuestionWrite() {
 	const navigate = useNavigate()
 	const [userQuestion, setUserQuestion] = useState([]) // 사용자 질문 상태 추가
 	const [aiResponse, setAiResponse] = useState([]) // AI 응답 상태 추가
+	const [loading, setLoading] = useState(false) // 로딩 상태 추가
 
 	const [formData, setFormData] = useState({
 		email: '',
@@ -82,6 +83,7 @@ export default function QuestionWrite() {
 	}
 
 	const handleAi = async () => {
+		setLoading(true) // 로딩 상태 설정
 		try {
 			const response = await axios.post(
 				'/api/open-ai',
@@ -108,6 +110,8 @@ export default function QuestionWrite() {
 		} catch (error) {
 			console.error('질문 실패', error)
 			alert('질문에 실패했습니다.')
+		} finally {
+			setLoading(false) // 로딩 상태 해제
 		}
 	}
 
@@ -178,8 +182,9 @@ export default function QuestionWrite() {
 			<button
 				onClick={handleAi}
 				className="my-4 w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+				disabled={loading} // 로딩 상태에 따라 버튼 비활성화
 			>
-				AI에게 질문하기
+				{loading ? 'AI에게 질문하는 중...' : 'AI에게 질문하기'}
 			</button>
 			<div className="space-y-4">
 				{userQuestion.map((question, index) => (
