@@ -70,8 +70,6 @@ export default function Chat() {
 				console.log('Stomp client set:', client)
 			},
 			(error) => {
-				/* eslint-disable no-console */
-				console.log('gjgj')
 				console.error('Error connecting to WebSocket:', error)
 			},
 		)
@@ -87,8 +85,8 @@ export default function Chat() {
 			}
 			stompClient.send(
 				'/pub/chat/message',
-				{},
 				JSON.stringify(messagePayload),
+				{},
 			)
 			setNewMessage('')
 		}
