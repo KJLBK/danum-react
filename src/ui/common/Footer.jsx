@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
-import LogoutButton from '../../components/Button/LogoutButton.jsx'
 
 export default function Footer() {
 	const [hello, setHello] = useState(false)
@@ -26,9 +25,6 @@ export default function Footer() {
 						{hello ? '연결성공' : '연결실패'}
 					</span>
 				</p>
-				<div className="mx-auto mt-4">
-					<LogoutButton />
-				</div>
 				<h2 className="text-m font-bold text-gray-300 mt-4">
 					Local Storage(authStorage)
 				</h2>
