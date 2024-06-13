@@ -54,12 +54,7 @@ export default function Home() {
 					>
 						마이페이지
 					</Link>
-					<Link
-						to="/chat"
-						className="text-blue-500 hover:text-blue-700"
-					>
-						채팅(chat)
-					</Link>
+
 					<Link
 						to="/chat/roomlist"
 						className="text-blue-500 hover:text-blue-700"
