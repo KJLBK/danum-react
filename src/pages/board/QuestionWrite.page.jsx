@@ -15,12 +15,19 @@ import { Link, useNavigate } from 'react-router-dom'
 import { jwtDecode } from 'jwt-decode'
 
 export default function QuestionWrite() {
+	const adminToken =
+		'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhQGEiLCJyb2xlIjpbeyJhdXRob3JpdHkiOiJBRE1JTiJ9XSwiZXhwIjoyMDE2MjYyMzYyfQ.sUoNzSqQtO7A6eAOkUbCb4_lPL96i8xkIHyvI3X6TfU'
+
 	const navigate = useNavigate()
+	const [userQuestion, setUserQuestion] = useState([]) // 사용자 질문 상태 추가
+	const [aiResponse, setAiResponse] = useState([]) // AI 응답 상태 추가
+	const [loading, setLoading] = useState(false) // 로딩 상태 추가
 
 	const [formData, setFormData] = useState({
 		email: '',
 		title: '',
 		content: '',
+		createId: '',
 	})
 
 	useEffect(() => {
@@ -59,10 +66,52 @@ export default function QuestionWrite() {
 				},
 			})
 			alert('글이 성공적으로 등록되었습니다.')
+			await axios.patch(
+				`/api/open-ai/${formData.createId}`,
+				{},
+				{
+					headers: {
+						Authorization: `Bearer ${adminToken}`,
+					},
+				},
+			)
 			navigate('/')
 		} catch (error) {
 			console.error('글 등록 실패', error)
 			alert('글 등록에 실패했습니다.')
+		}
+	}
+
+	const handleAi = async () => {
+		setLoading(true) // 로딩 상태 설정
+		try {
+			const response = await axios.post(
+				'/api/open-ai',
+				{ message: formData.content },
+				{
+					headers: {
+						Authorization: `Bearer ${adminToken}`,
+					},
+				},
+			)
+			setUserQuestion((prevQuestions) => [
+				...prevQuestions,
+				formData.content,
+			]) //새로운 질문 추가
+			setAiResponse((prevResponses) => [
+				...prevResponses,
+				response.data.message,
+			]) // 새로운 AI 응답 추가
+			setFormData((prevState) => ({
+				...prevState,
+				content: '',
+				createId: response.data.createdId, // createdId를 formData에 설정
+			}))
+		} catch (error) {
+			console.error('질문 실패', error)
+			alert('질문에 실패했습니다.')
+		} finally {
+			setLoading(false) // 로딩 상태 해제
 		}
 	}
 
@@ -130,6 +179,26 @@ export default function QuestionWrite() {
 					글 올리기
 				</button>
 			</form>
+			<button
+				onClick={handleAi}
+				className="my-4 w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+				disabled={loading} // 로딩 상태에 따라 버튼 비활성화
+			>
+				{loading ? 'AI에게 질문하는 중...' : 'AI에게 질문하기'}
+			</button>
+			<div className="space-y-4">
+				{userQuestion.map((question, index) => (
+					<div
+						key={index}
+						className="bg-blue-100 p-4 rounded-lg shadow-md"
+					>
+						<p className="text-blue-900">User: {question}</p>
+						<p className="text-green-900 mt-2">
+							AI: {aiResponse[index]}
+						</p>
+					</div>
+				))}
+			</div>
 		</div>
 	)
 }

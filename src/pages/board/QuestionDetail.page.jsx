@@ -12,26 +12,33 @@ export default function QuestionDetail() {
 	const [email, setEmail] = useState('') // 이메일 상태를 추가합니다.
 	const [editingCommentId, setEditingCommentId] = useState(null) // 현재 수정 중인 댓글 ID 상태 추가
 	const [editedContent, setEditedContent] = useState('') // 수정할 댓글 내용을 상태로 관리합니다.
+	const [aiId, setAiId] = useState('')
+	const [aiResponse, setAiResponse] = useState([])
 
 	const URL = `/api/board/question/show/${question_id}`
 	const Token =
 		'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhQGEiLCJyb2xlIjpbeyJhdXRob3JpdHkiOiJVU0VSIn1dLCJleHAiOjIwMTYyNjIzNjJ9.azK0eQzXB-JhkBDdqCtf5xQQQOHUfWJ64cx-PA33Mig'
+	const adminToken =
+		'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhQGEiLCJyb2xlIjpbeyJhdXRob3JpdHkiOiJBRE1JTiJ9XSwiZXhwIjoyMDE2MjYyMzYyfQ.sUoNzSqQtO7A6eAOkUbCb4_lPL96i8xkIHyvI3X6TfU'
 
 	useEffect(() => {
-		axios
-			.get(URL, {
-				headers: {
-					Authorization: `Bearer ${Token}`,
-				},
-			})
-			.then((response) => {
+		const fetchData = async () => {
+			try {
+				const response = await axios.get(URL, {
+					headers: {
+						Authorization: `Bearer ${Token}`,
+					},
+				})
 				setQuestionData(response.data)
-				//setLikes(response.data.like)
-			})
-			.catch((error) => {
+				setAiId(response.data.conversation.createId)
+				//setLikes(response.data.like);
+			} catch (error) {
 				console.error('Error:', error)
-			})
-	}, [URL, Token])
+			}
+		}
+
+		fetchData()
+	}, [URL, Token, question_id])
 
 	useEffect(() => {
 		const token = localStorage.getItem('accessToken') // 로컬 스토리지에서 토큰 가져오기
@@ -44,20 +51,40 @@ export default function QuestionDetail() {
 	}, [])
 
 	useEffect(() => {
-		// 댓글을 가져오는 API 호출
-		axios
-			.get(`/api/board/question/comment/show/${question_id}`, {
-				headers: {
-					Authorization: `Bearer ${Token}`,
-				},
-			})
-			.then((response) => {
+		const fetchComments = async () => {
+			try {
+				const response = await axios.get(
+					`/api/board/question/comment/show/${question_id}`,
+					{
+						headers: {
+							Authorization: `Bearer ${Token}`,
+						},
+					},
+				)
 				setComments(response.data) // 댓글 상태 업데이트
-			})
-			.catch((error) => {
+			} catch (error) {
 				console.error('Error:', error)
-			})
+			}
+		}
+
+		fetchComments()
 	}, [question_id, Token])
+
+	const fetchAiResponse = async () => {
+		if (aiId) {
+			// aiId 값이 존재하는 경우에만 실행
+			try {
+				const response = await axios.get(`/api/open-ai/${aiId}`, {
+					headers: {
+						Authorization: `Bearer ${adminToken}`,
+					},
+				})
+				setAiResponse(response.data) // AI 답변 상태 업데이트
+			} catch (error) {
+				console.error('Error:', error)
+			}
+		}
+	}
 
 	// const handleLike = () => {
 	// 	axios
@@ -223,6 +250,24 @@ export default function QuestionDetail() {
 						>
 							좋아요 {likes}
 						</button> */}
+						{aiResponse.length > 0 && (
+							<div className="text-sm font-medium leading-6 text-gray-900">
+								{aiResponse.map((item, index) => (
+									<div key={index}>
+										<p>
+											{item.messageType} - {item.content}{' '}
+										</p>
+										<br />
+									</div>
+								))}
+							</div>
+						)}
+						<button
+							className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+							onClick={fetchAiResponse}
+						>
+							AI 대화 내용 보기
+						</button>
 						<div className="mt-4">
 							<textarea
 								className="w-full border border-gray-300 rounded-lg p-2"
