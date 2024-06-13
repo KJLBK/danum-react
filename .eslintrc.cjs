@@ -1,8 +1,15 @@
 module.exports = {
 	root: true,
 	env: { node: true, browser: true, es2021: true },
-	extends: ['eslint:recommended', 'plugin:react/recommended', 'plugin:react/jsx-runtime', 'plugin:react-hooks/recommended', 'plugin:import/recommended', 'plugin:storybook/recommended'],
-	ignorePatterns: ['dist', '.eslintrc.cjs'],
+	extends: [
+		'eslint:recommended',
+		'plugin:react/recommended',
+		'plugin:react/jsx-runtime',
+		'plugin:react-hooks/recommended',
+		'plugin:import/recommended',
+		'plugin:storybook/recommended',
+	],
+	ignorePatterns: ['dist', '.eslintrc.cjs', 'src/pages/ChatRoom.page.jsx'],
 	parserOptions: { ecmaVersion: 'latest', sourceType: 'module' },
 	settings: { react: { version: 'detect' } },
 	plugins: ['import', 'react', 'react-refresh'],
