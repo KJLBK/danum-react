@@ -9,16 +9,16 @@ import {
 	CardBody,
 	Typography,
 } from '@material-tailwind/react'
+import { jwtDecode } from 'jwt-decode'
 
 export default function ChatRoom() {
 	const { roomId } = useParams()
 	const [messages, setMessages] = useState([])
 	const [client, setClient] = useState(null)
 	const [newMessage, setNewMessage] = useState('')
-	const sender = 'user'
 	const jwtToken =
 		'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhQGEiLCJyb2xlIjpbeyJhdXRob3JpdHkiOiJVU0VSIn1dLCJleHAiOjIwMTYyNjIzNjJ9.azK0eQzXB-JhkBDdqCtf5xQQQOHUfWJ64cx-PA33Mig'
-
+	const sender = jwtDecode(jwtToken).sub
 	const initializeWebSocketConnection = () => {
 		const socket = new SockJS(`/api/ws-stomp`)
 		const stompClient = Stomp.over(socket)
