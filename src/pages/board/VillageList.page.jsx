@@ -1,6 +1,17 @@
 import axios from 'axios'
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import {
+	Card,
+	CardBody,
+	Typography,
+	Input,
+	Button,
+	List,
+	ListItem,
+	ListItemPrefix,
+	ListItemSuffix,
+} from '@material-tailwind/react'
 
 const VillageList = () => {
 	const [villageList, setVillageList] = useState([])
@@ -24,7 +35,7 @@ const VillageList = () => {
 			.catch((error) => {
 				console.error('Error:', error)
 			})
-	}, [URL, Token])
+	}, [])
 
 	const handleViewDetails = (village_id) => {
 		axios
@@ -47,44 +58,63 @@ const VillageList = () => {
 
 	return (
 		<div className="flex justify-center items-center min-h-screen bg-gray-100">
-			<div className="w-full max-w-4xl bg-white shadow-md rounded-lg p-6">
-				<h2 className="text-2xl font-bold mb-4">Village List</h2>
-				<input
-					type="text"
-					placeholder="Search..."
-					value={searchQuery}
-					onChange={(e) => setSearchQuery(e.target.value)}
-					className="w-full p-2 mb-4 border border-gray-300 rounded"
-				/>
-				<ul className="divide-y divide-gray-200">
-					{filteredVillageList.map((item) => (
-						<li
-							key={item.village_id}
-							className="py-4 flex justify-between items-center"
+			<Card className="w-full max-w-4xl">
+				<CardBody>
+					<div className="flex justify-between items-center mb-4">
+						<Typography variant="h3" className="mb-0 text-center">
+							Village List
+						</Typography>
+						<Button
+							color="black"
+							onClick={() => navigate('/village-write')}
 						>
-							<div>
-								<h3 className="text-lg font-semibold text-gray-900">
-									{item.title}
-								</h3>
-								<p className="text-sm text-gray-600">
-									작성자: {item.email}
-								</p>
-								{/* <p className="text-sm text-gray-600">
-									조회수: {item.count}
-								</p> */}
-							</div>
-							<button
-								className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-								onClick={() =>
-									handleViewDetails(item.village_id)
-								}
+							질문 작성
+						</Button>
+					</div>
+					<div className="flex justify-between items-center mb-4">
+						<Input
+							type="text"
+							placeholder="Search..."
+							value={searchQuery}
+							onChange={(e) => setSearchQuery(e.target.value)}
+							className="flex-grow mr-4"
+						/>
+					</div>
+					<List>
+						{filteredVillageList.map((item) => (
+							<ListItem
+								key={item.village_id}
+								className="flex justify-between items-center py-4"
 							>
-								자세히 보기
-							</button>
-						</li>
-					))}
-				</ul>
-			</div>
+								<ListItemPrefix>
+									<Typography
+										variant="h5"
+										className="font-semibold"
+									>
+										{item.title}
+									</Typography>
+									<Typography
+										variant="small"
+										className="text-gray-600"
+									>
+										작성자: {item.email}
+									</Typography>
+								</ListItemPrefix>
+								<ListItemSuffix>
+									<Button
+										color="blue"
+										onClick={() =>
+											handleViewDetails(item.village_id)
+										}
+									>
+										자세히 보기
+									</Button>
+								</ListItemSuffix>
+							</ListItem>
+						))}
+					</List>
+				</CardBody>
+			</Card>
 		</div>
 	)
 }
