@@ -65,6 +65,8 @@ jobs:
                   username: ${{ secrets.USER }}
                   script: |
                       sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/my-nginx
-                      sudo docker stop my-nginx || true
-                      sudo docker rm my-nginx || true
+                      if sudo docker ps -a --filter "name=my-nginx" --format '{{.Names}}' | grep -w my-nginx; then
+                        sudo docker stop my-nginx
+                        sudo docker rm my-nginx
+                      fi
                       sudo docker run -d --rm --name my-nginx -p 80:80 ${{ secrets.DOCKERHUB_USERNAME }}/my-nginx
