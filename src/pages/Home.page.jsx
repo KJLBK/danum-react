@@ -6,7 +6,7 @@ export default function Home() {
 		<div className="flex flex-col justify-center items-center min-h-screen bg-gray-100">
 			<Card className="p-8 shadow-lg rounded-lg w-1/2 mb-8">
 				<Typography variant="h5" className="text-center text-gray-800">
-					danum-dev- page
+					danum-dev-page
 				</Typography>
 				<nav className="mt-4 space-x-4 text-center">
 					<Link
