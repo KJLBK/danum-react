@@ -15,7 +15,7 @@ export default function Header() {
 	const handleLogout = async () => {
 		await axios.get('/api/logout')
 		// Remove token and update authentication state
-		localStorage.removeItem('token')
+		localStorage.removeItem('accessToken')
 		setIsAuthenticated(false)
 		navigate('/login')
 	}
