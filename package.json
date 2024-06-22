@@ -1,7 +1,7 @@
 {
 	"name": "danum-frontend",
 	"private": true,
-	"version": "0.0.0",
+	"version": "0.1.0",
 	"type": "module",
 	"scripts": {
 		"dev": "vite",
@@ -10,7 +10,6 @@
 		"lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
 		"preview": "vite preview --port 3000",
 		"prepare": "husky",
-		"proxy": "http://43.203.8.51:8080",
 		"storybook": "storybook dev -p 6006",
 		"build-storybook": "storybook build"
 	},
@@ -23,6 +22,7 @@
 	"dependencies": {
 		"@material-tailwind/html": "^2.2.2",
 		"@material-tailwind/react": "^2.1.9",
+		"@storybook/core-server": "^8.1.10",
 		"axios": "^1.7.2",
 		"dotenv": "^16.4.5",
 		"jwt-decode": "^4.0.0",
