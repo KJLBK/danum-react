@@ -64,7 +64,7 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USER }}
           script: |
-            cd /path/to/your/project
+            cd /home/ubuntu/danum-frontend
             sudo docker-compose down || true
             sudo docker-compose pull
             sudo docker-compose up -d --build
