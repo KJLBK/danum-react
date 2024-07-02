@@ -64,7 +64,9 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USER }}
           script: |
-            cd /home/***/danum-frontend
-            sudo docker-compose down || true
-            sudo docker-compose pull
-            sudo docker-compose up -d --build
+            sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/my-nginx
+            if sudo docker ps -a --filter "name=my-nginx" --format '{{.Names}}' | grep -w my-nginx; then
+              sudo docker stop my-nginx
+              sudo docker rm my-nginx
+            fi
+            sudo docker run -d --rm --name my-nginx -p 80:80 -p 443:443 ${{ secrets.DOCKERHUB_USERNAME }}/my-nginx
