@@ -56,6 +56,7 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/my-nginx
+          build-args: --no-cache
 
       - name: Pull and restart Docker Container
         uses: appleboy/ssh-action@master
