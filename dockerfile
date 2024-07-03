@@ -17,7 +17,7 @@ FROM nginx:stable-alpine
 RUN rm /etc/nginx/conf.d/default.conf
 
 COPY ./nginx/default.conf /etc/nginx/conf.d
-COPY /etc/ssl/mydomain.com /etc/ssl/mydomain.com
+COPY ../../../etc/ssl/mydomain.com /etc/ssl/mydomain.com
 COPY --from=build /app/dist /usr/share/nginx/html
 
 EXPOSE 80
