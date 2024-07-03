@@ -12,7 +12,7 @@ COPY . .
 
 RUN npm run build
 
-FROM nginx:stable-alpine
+FROM nginx:alpine
 
 RUN rm /etc/nginx/conf.d/default.conf
 
