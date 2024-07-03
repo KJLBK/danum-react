@@ -71,7 +71,8 @@ jobs:
           username: ${{ secrets.USER }}
           script: |
             cd /home/ubuntu/danum-frontend
-            sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/my-nginx
             sudo docker-compose down || true
             sudo docker-compose pull
             sudo docker-compose up -d --build
+            sudo docker rm -f my-nginx || true
+            sudo docker run -d --rm --name my-nginx -p 80:80 -p 443:443 ${{ secrets.DOCKERHUB_USERNAME }}/my-nginx
