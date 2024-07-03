@@ -55,7 +55,7 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: iam0802/my-nginx
+          tags: iam0802/my-nginx:latest
 
       - name: Pull and restart Docker Container
         uses: appleboy/ssh-action@master
@@ -64,9 +64,7 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USER }}
           script: |
-            sudo docker pull iam0802/my-nginx
-            if sudo docker ps -a --filter "name=my-nginx" --format '{{.Names}}' | grep -w my-nginx; then
-              sudo docker stop my-nginx
-              sudo docker rm my-nginx
-            fi
-            sudo docker run -d --rm --name my-nginx -p 80:80 -p 443:443 iam0802/my-nginx
+            cd /home/***/danum-frontend
+            sudo docker-compose down || true
+            sudo docker-compose pull
+            sudo docker-compose up -d --build
