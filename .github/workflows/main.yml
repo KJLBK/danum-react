@@ -69,6 +69,8 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USER }}
+          env:
+            DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
           script: |
             cd /home/ubuntu/danum-frontend
             sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/my-nginx:latest
