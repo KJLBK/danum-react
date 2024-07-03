@@ -59,7 +59,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
-          file: ./Dockerfile
+          file: ./dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/my-nginx
 
@@ -70,7 +70,7 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USER }}
           script: |
-            cd /home/***/danum-frontend
+            cd /home/ubuntu/danum-frontend
             sudo docker-compose down || true
             sudo docker-compose pull
             sudo docker-compose up -d --build
