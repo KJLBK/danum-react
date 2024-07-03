@@ -61,7 +61,7 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/my-nginx:latest
+          tags: iam0802/my-nginx:latest
 
       - name: Pull and restart Docker Container
         uses: appleboy/ssh-action@master
@@ -69,10 +69,8 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USER }}
-          env:
-            DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
           script: |
             cd /home/ubuntu/danum-frontend
-            sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/my-nginx:latest
             sudo docker-compose down || true
+            sudo docker-compose pull
             sudo docker-compose up -d --build
