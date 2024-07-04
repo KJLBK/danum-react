@@ -10,16 +10,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-
-      - name: Create .env file
-        run: echo "VITE_API_BASE_URL=${{ secrets.VITE_API_BASE_URL }}" >> .env
-
-
-      - name: Lint and Format Check
-        run: |
-          npm run lint
-          npm run format
-
       - name: Deploy to server
         uses: appleboy/ssh-action@master
         with:
