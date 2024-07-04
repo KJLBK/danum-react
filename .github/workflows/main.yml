@@ -54,7 +54,7 @@ jobs:
           username: ${{ secrets.USER }}
           script: |
             mkdir -p ~/deploy_temp
-            scp -r ./dist/* ${{ secrets.USER }}@${{ secrets.HOST }}:~/deploy_temp/
             sudo rm -rf /var/www/html/*
+            scp -r ./dist/* ${{ secrets.USER }}@${{ secrets.HOST }}:~/deploy_temp/
             sudo mv ~/deploy_temp/* /var/www/html/
             sudo systemctl restart nginx
