@@ -5,7 +5,6 @@ on:
     branches: [main]
   workflow_dispatch:
 
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -16,6 +15,9 @@ jobs:
 
       - name: Install SSH client
         run: sudo apt-get install openssh-client -y
+
+      - name: Prepare SSH
+        run: mkdir -p ~/.ssh && chmod 700 ~/.ssh
 
       - name: Configure SSH known hosts
         run: ssh-keyscan -t rsa ${{ secrets.VITE_API_BASE_URL }} >> ~/.ssh/known_hosts
