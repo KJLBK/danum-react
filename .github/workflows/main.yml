@@ -5,6 +5,7 @@ on:
     branches: [main]
   workflow_dispatch:
 
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -16,12 +17,18 @@ jobs:
       - name: Install SSH client
         run: sudo apt-get install openssh-client -y
 
+<<<<<<< HEAD
       - name: Prepare SSH
         run: mkdir -p ~/.ssh && chmod 700 ~/.ssh
 
       - name: Configure SSH known hosts
         run: ssh-keyscan -t rsa ${{ secrets.VITE_API_BASE_URL }} >> ~/.ssh/known_hosts
 
+=======
+      - name: Configure SSH known hosts
+        run: ssh-keyscan -t rsa ${{ secrets.VITE_API_BASE_URL }} >> ~/.ssh/known_hosts
+
+>>>>>>> c12faca52f7536a51c3d8f1cb9ac2801727e6c61
       - name: Deploy code to EC2
         uses: appleboy/ssh-action@master
         with:
