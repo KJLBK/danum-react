@@ -2,7 +2,7 @@ import { Route, Routes } from 'react-router-dom'
 import Home from './pages/Home.page.jsx'
 import Join from './pages/Join.page.jsx'
 import Login from './pages/Login.page.jsx'
-import Test from './pages/Test.page.jsx'
+// import Test from './pages/Test.page.jsx'
 import VillageList from './pages/board/VillageList.page.jsx'
 import QuestionList from './pages/board/QuestionList.page.jsx'
 import QuestionWrite from './pages/board/QuestionWrite.page.jsx'
@@ -24,7 +24,7 @@ function App() {
 				<Route path="/" element={<Home />} />
 				<Route path="join" element={<Join />} />
 				<Route path="login" element={<Login />} />
-				<Route path="fe-test" element={<Test />} />
+				{/* <Route path="fe-test" element={<Test />} /> */}
 				{/* 게시판 */}
 				<Route path="dev-question" element={<QuestionList />} />
 				<Route path="dev-village" element={<VillageList />} />
