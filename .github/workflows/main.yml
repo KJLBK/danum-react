@@ -53,7 +53,20 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USER }}
           script: |
+            # Install Node.js if not installed
+            if ! command -v node &> /dev/null; then
+              curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+              sudo apt-get install -y nodejs
+            fi
+
+            # Navigate to the project directory
             cd /home/ubuntu/danum-frontend
+
+            # Pull the latest code
             git pull origin main
+
+            # Install dependencies
             npm ci
+
+            # Build the project
             npm run build
