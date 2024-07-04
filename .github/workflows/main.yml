@@ -57,4 +57,4 @@ jobs:
             sudo rm -rf /var/www/html/*
             scp -r ./dist/* ${{ secrets.USER }}@${{ secrets.HOST }}:~/deploy_temp/
             sudo mv ~/deploy_temp/* /var/www/html/
-            sudo systemctl restart nginx
+            sudo systemctl stop nginx
