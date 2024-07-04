@@ -1,4 +1,4 @@
-name: Deploy to EC2
+name: Deploy
 
 on:
   push:
@@ -10,31 +10,51 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install SSH client
-        run: sudo apt-get install openssh-client -y
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.12.1'
 
-      - name: Prepare SSH
-        run: mkdir -p ~/.ssh && chmod 700 ~/.ssh
+      - name: Cache node modules
+        uses: actions/cache@v4
+        id: cache
+        with:
+          path: node_modules
+          key: npm-packages-${{ hashFiles('**/package-lock.json') }}
 
-      - name: Resolve IP address (optional)
-        run: nslookup ${{ secrets.VITE_API_BASE_URL }}
+      - name: Create .env file
+        run: echo "VITE_API_BASE_URL=${{ secrets.VITE_API_BASE_URL }}" >> .env
 
-      - name: Configure SSH known hosts
-        run: ssh-keyscan -t rsa <IP_ADDRESS> >> ~/.ssh/known_hosts
-        env:
-          IP_ADDRESS: ${{ secrets.VITE_API_BASE_URL }}  # Use IP address directly or resolve to IP in this step
+      - name: Install Dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: npm ci
 
-      - name: Deploy code to EC2
+      - name: Lint and Format Check
+        run: |
+          npm run lint
+          npm run format
+
+      - name: Build
+        run: npm run build
+
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: dist
+          path: ./dist
+
+      - name: Deploy to server
         uses: appleboy/ssh-action@master
         with:
+          key: ${{ secrets.SSH_KEY }}
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USER }}
-          key: ${{ secrets.SSH_KEY }}
           script: |
-            cd /home/ubuntu/danum-frontend
-            git pull origin main
-            npm ci
-            npm run build
+            mkdir -p ~/deploy_temp
+            sudo rm -rf /var/www/html/*
+            scp -r ./dist/* ${{ secrets.USER }}@${{ secrets.HOST }}:~/deploy_temp/
+            sudo mv ~/deploy_temp/* /var/www/html/
+            sudo systemctl restart nginx
